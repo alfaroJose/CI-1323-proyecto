@@ -6,4 +6,4 @@ Integrantes:
 * José Alfaro
 * Luis Guevara
 
-Lenguaje utilizado: Phyton
+Lenguaje utilizado: Python
