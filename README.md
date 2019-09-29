@@ -7,3 +7,5 @@ Integrantes:
 * Luis Guevara
 
 Lenguaje utilizado: Python
+
+Intérprete de Python: Python 3.7
