@@ -5,5 +5,4 @@ from MemoriaPrincipal import MemoriaPrincipal
 # ------------------------- PROGRAMA ------------------------------------------------------------
 
 memoriaPrincipal = MemoriaPrincipal()
-x = 12
-print(x)
+memoriaPrincipal.imprimirMemoria()
