@@ -10,7 +10,7 @@ class AreaDatos:
     def guardarDato(self, dato, posicion):
         self.datos[posicion] = dato
 
-    #Método para leer un dato del arreglo de datos
+    #Función para leer un dato del arreglo de datos
     #Se rebibe la posición donde esta guardado el dato que se desea leer en el arreglo de datos
     def leerDato(self, posicion):
         return self.datos[posicion]

@@ -5,6 +5,17 @@ class AreaInstrucciones:
         self.instrucciones = []
         self.llenar()
 
+    #Método para guardar una instrucción en el arreglo de instrucciones
+    #Se recibe un arreglo con las 4 partes de una instrucción y la posicion en la que será guardada
+    def guardarInstrucciones(self, instrucciones, posicion):
+        self.instrucciones[int(posicion/4)] = instrucciones
+
+
+    #Función para leer un bloque de instrucciones del arreglo de instrucciones
+    # Se recibe la posición donde están almacenadas las 4 partes de la instrucción
+    def leerInstrucciones(self, posicion):
+        return self.instrucciones[posicion]
+
     #Método que inicializa el arreglo de instrucciones con números del 384 al 1020 con incrementos de 4 en 4
     def llenar(self):
         x = 384

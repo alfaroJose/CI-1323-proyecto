@@ -5,4 +5,6 @@ from MemoriaPrincipal import MemoriaPrincipal
 # ------------------------- PROGRAMA ------------------------------------------------------------
 
 memoriaPrincipal = MemoriaPrincipal()
+memoriaPrincipal.guardarDato(69, -1)
+memoriaPrincipal.guardarInstrucciones([0,0,0,0],384)
 memoriaPrincipal.imprimirMemoria()
