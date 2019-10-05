@@ -8,12 +8,14 @@ class AreaDatos:
     #Método para guardar un dato en el arreglo de datos
     #Se recibe el dato nuevo a guardar y la posición donde se desea guardar en el arreglo de datos
     def guardarDato(self, dato, posicion):
-        self.datos[posicion] = dato
+        #La posicion se divide entre 4 debido a que el arreglo comienza en 0 lógicamente
+        self.datos[int(posicion/4)] = dato
 
     #Función para leer un dato del arreglo de datos
     #Se rebibe la posición donde esta guardado el dato que se desea leer en el arreglo de datos
     def leerDato(self, posicion):
-        return self.datos[posicion]
+        #La posicion se divide entre 4 debido a que el arreglo comienza en 0 lógicamente
+        return self.datos[int(posicion/4)]
 
     #Método que inicializa el arreglo de datos con números del 0 al 380 con incrementos de 4 en 4
     def llenar(self):
@@ -28,10 +30,10 @@ class AreaDatos:
         tamanoMaximo = self.tamanoMaximo()
         if maximo > tamanoMaximo:
             tamanoMaximo = maximo
-        for x in self.datos:
+        for y in self.datos:
             if x % 64 == 0 and x != 0:
                 print()
-            print(x, end=self.calcularRelleno(x, tamanoMaximo))
+            print(y, end=self.calcularRelleno(y, tamanoMaximo))
             x += 4
 
     #Función que retorna la cantidad de digitos del número con más digitos en el arreglo de datos

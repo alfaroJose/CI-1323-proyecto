@@ -20,7 +20,7 @@ class MemoriaPrincipal:
     #Se rebibe la posición donde esta guardado el dato que se desea leer en memoria
     def leerDato(self, posicion):
         if posicion >= 0 and posicion <= 380:
-            self.areaDatos.leerDato(posicion)
+            return self.areaDatos.leerDato(posicion)
         else:
             print("La posicion: " + str(posicion) + " es invalida para leer en el area de datos")
 
@@ -36,7 +36,7 @@ class MemoriaPrincipal:
     #Se recibe la posición donde están almacenadas las 4 partes de la instrucción
     def leerInstrucciones(self, posicion):
         if posicion >= 384 and posicion <= 1020:
-            self.areaInstrucciones.leerInstrucciones(posicion)
+            return self.areaInstrucciones.leerInstrucciones(posicion)
         else:
             print("La posicion: " + str(posicion) + " es invalida para leer en el area de instrucciones")
 
@@ -47,3 +47,12 @@ class MemoriaPrincipal:
         print()
         print("Área de instrucciones:")
         self.areaInstrucciones.imprimir(self.areaDatos.tamanoMaximo())
+        print()
+
+    def imprimirAreaDatos(self):
+        self.areaDatos.imprimir(0)
+        print()
+
+    def imprimirAreaInstrucciones(self):
+        self.areaInstrucciones.imprimir(0)
+        print()
