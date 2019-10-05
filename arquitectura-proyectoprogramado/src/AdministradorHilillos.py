@@ -30,8 +30,9 @@ def cargarHilillos(hilillos, memoriaPrincipal):
     for hilillo in hilillos:
         file = open(hilillo, "r")
         for f in file:
-            memoriaPrincipal.guardarInstrucciones(f, posicion)
+            memoriaPrincipal.guardarInstrucciones(f.strip(), posicion)
             posicion += 4
+        file.close()
 
 
 
@@ -40,7 +41,14 @@ def cargarHilillos(hilillos, memoriaPrincipal):
 memoriaPrincipal = MemoriaPrincipal()
 memoriaPrincipal.guardarDato(69, 380)
 print(memoriaPrincipal.leerDato(380))
-memoriaPrincipal.guardarInstrucciones("0 0 0 0",384)
+memoriaPrincipal.guardarInstrucciones("999 999 999 999",384)
+#memoriaPrincipal.guardarInstrucciones("37 0 0 128",388)
+#memoriaPrincipal.guardarInstrucciones("37 0 0 132",392)
+#memoriaPrincipal.guardarInstrucciones("37 0 0 136",396)
+#memoriaPrincipal.guardarInstrucciones("37 0 0 140",400)
+#memoriaPrincipal.guardarInstrucciones("37 0 0 144",404)
+#memoriaPrincipal.guardarInstrucciones("37 0 0 148",408)
+#memoriaPrincipal.guardarInstrucciones("999 0 0 0",412)
 memoriaPrincipal.guardarDato(80,384)
 memoriaPrincipal.imprimirMemoria()
 print(memoriaPrincipal.leerInstrucciones(384))
