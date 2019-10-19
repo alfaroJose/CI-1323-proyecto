@@ -1,5 +1,6 @@
 import os
 from MemoriaPrincipal import MemoriaPrincipal
+from TCB import TCB
 
 # ------------------------ DEFINICION DE VARIABLES Y FUNCIONES -----------------------------------
 #Método que lee todos los archivos .txt que estén presentes en el directorio
@@ -49,3 +50,7 @@ print(memoriaPrincipal.leerInstrucciones(384))
 #memoriaPrincipal.imprimirAreaInstrucciones()
 cargarHilillos(leerHilillos(), memoriaPrincipal)
 memoriaPrincipal.imprimirMemoria()
+
+tcb = TCB()
+tcb.agregarHilillo("0")
+tcb.imprimir()
