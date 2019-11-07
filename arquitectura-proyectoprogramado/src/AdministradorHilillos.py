@@ -2,6 +2,8 @@ import os
 from MemoriaPrincipal import MemoriaPrincipal
 from TCB import TCB
 
+from Cache import Cache
+
 # ------------------------ DEFINICION DE VARIABLES Y FUNCIONES -----------------------------------
 #Método que lee todos los archivos .txt que estén presentes en el directorio
 #donde se corre el programa sin importar los subdirectorios que tenga y devuelve un
@@ -54,3 +56,7 @@ memoriaPrincipal.imprimirMemoria()
 tcb = TCB()
 tcb.agregarHilillo("0")
 tcb.imprimir()
+
+cd = Cache()
+cd.imprimirCacheDatos()
+cd.imprimirCacheInstrucciones()

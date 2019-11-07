@@ -17,6 +17,12 @@ class AreaDatos:
         #La posicion se divide entre 4 debido a que el arreglo comienza en 0 lógicamente
         return self.datos[int(posicion/4)]
 
+    #Función para guardar un bloque
+    def guardarBloqueDatos(self, posicion):
+
+
+    #función para leer un bloque
+
     #Método que inicializa el arreglo de datos con números del 0 al 380 con incrementos de 4 en 4
     def llenar(self):
         x = 0
