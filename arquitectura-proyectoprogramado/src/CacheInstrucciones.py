@@ -1,4 +1,4 @@
-#Clase que representa una cache de instrucciones
+# Clase que representa una cache de instrucciones
 class CacheInstrucciones:
 
     def __init__(self):
@@ -12,3 +12,6 @@ class CacheInstrucciones:
             for j in range(len(self.instrucciones[i])):
                 print(self.instrucciones[i][j], end=' ')
             print()
+
+    def getInstruccion(self, programCounter):
+        return self.instrucciones[(programCounter % 16) % 4]

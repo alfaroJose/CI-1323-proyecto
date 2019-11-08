@@ -13,3 +13,6 @@ class Cache:
 
     def imprimirCacheInstrucciones(self):
         self.cacheInstrucciones.imprimir()
+
+    def getInstruccion(self, programCounter):
+        self.cacheInstrucciones.getInstruccion(programCounter)
