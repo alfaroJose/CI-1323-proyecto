@@ -32,7 +32,7 @@ class MemoriaPrincipal:
             for x in range(dirInicialBloque, dirInicialBloque + 3):
                 bloque.append(self.areaDatos[x])
         else:
-            print("La posicion: " + str(posicion) + " es inválida para leer en el area de datos")
+            print("La posición: " + str(posicion) + " es inválida para leer en el area de datos")
         return bloque
 
     #Método para guardar una instrucción en memoria
