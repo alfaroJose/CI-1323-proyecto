@@ -8,5 +8,21 @@ class Nucleo:
         self.programCounter = 0
         self.registros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+    def ejecutarInstruccion(self):
+        return 1
+
     def intructionFetch(self):
-        self.cache.getInstruccion(self)
+        return self.cache.getInstruccion(self)
+
+    #en proceso
+    def intructionDecode(self, instruccion):
+        return instruccion
+
+    def intructionExec(self, instruccion):
+        return instruccion
+
+    def intructionMem(self, instruccion):
+        return instruccion
+
+    def intructionWB(self, instruccion):
+        return instruccion

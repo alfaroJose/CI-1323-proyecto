@@ -19,7 +19,7 @@ class AreaDatos:
 
     #Función para guardar un bloque
     def guardarBloqueDatos(self, posicion):
-
+        return 1
 
     #función para leer un bloque
 
