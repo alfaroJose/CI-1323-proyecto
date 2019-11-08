@@ -5,7 +5,6 @@ class TCB:
 
     def __init__(self):
         self.tcb = []
-        self.numHilillo = 0
 
     #Agrega un hilillo al TCB
     def agregarHilillo(self, identificador):
@@ -24,8 +23,12 @@ class TCB:
 
     #Modifica un hilillo ya agregado
     #Se usa para cuando se lee una instruccion fin
-    def modificarHilillo(self, hilillo):
-
+    def modificarHilillo(self, modificado):
+        for hilillo in self.tcb:
+            if hilillo.identificador == modificado.identificador:
+                hilillo.setEstado(2)
+                hilillo.setReloj(modificado.getReloj)
+                hilillo.setRegistros(modificado.getRegistros())
 
     #Imprime los datos de cada hilillo en el TCB
     def imprimir(self):
