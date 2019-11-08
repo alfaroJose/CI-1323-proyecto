@@ -13,8 +13,14 @@ class TCB:
         self.tcb.append(hilillo)
 
     #Pide un hilillo que este sin usar al TCB
+    #Devuelve el hilillo sin usar o None en caso de que ya no queden disponibles
     def pedirHilillo(self, reloj):
-        return 0
+        for hilillo in self.tcb:
+            if hilillo.estado == 0:
+                hilillo.setEstado(1)
+                return hilillo
+            else:
+                return None
 
     #Imprime los datos de cada hilillo en el TCB
     def imprimir(self):

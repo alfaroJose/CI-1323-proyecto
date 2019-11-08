@@ -8,7 +8,7 @@ class Hilillo:
         self.reloj = 0
         self.registros = []
         for i in range(32):
-            self.registros.append(i)
+            self.registros.append(0)
 
     #Cambia el estado de un hilillo, 0 para no usado, 1 para usado y 2 para terminado.
     def setEstado(self, estado):
