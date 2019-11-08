@@ -27,8 +27,8 @@ class MemoriaPrincipal:
     def leerBloqueDato(self, posicion):
         bloque = []
         if posicion >= 0 and posicion <= 380:
-            numBloque = posicion % 4;
-            dirInicialBloque = numBloque * 4;
+            numBloque = posicion % 4
+            dirInicialBloque = numBloque * 4
             for x in range(dirInicialBloque, dirInicialBloque + 3):
                 bloque.append(self.areaDatos[x])
         else:

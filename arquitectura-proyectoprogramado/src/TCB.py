@@ -22,6 +22,11 @@ class TCB:
             else:
                 return None
 
+    #Modifica un hilillo ya agregado
+    #Se usa para cuando se lee una instruccion fin
+    def modificarHilillo(self, hilillo):
+
+
     #Imprime los datos de cada hilillo en el TCB
     def imprimir(self):
         for hilillo in self.tcb:

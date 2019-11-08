@@ -60,3 +60,5 @@ tcb.imprimir()
 cd = Cache()
 cd.imprimirCacheDatos()
 cd.imprimirCacheInstrucciones()
+
+print(memoriaPrincipal.leerBloqueDato(380))
