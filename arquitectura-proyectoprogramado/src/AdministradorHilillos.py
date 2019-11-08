@@ -1,7 +1,6 @@
 import os
 from MemoriaPrincipal import MemoriaPrincipal
 from TCB import TCB
-
 from Cache import Cache
 
 # ------------------------ DEFINICION DE VARIABLES Y FUNCIONES -----------------------------------
@@ -42,7 +41,7 @@ def cargarHilillos(hilillos, memoriaPrincipal):
 # ------------------------- PROGRAMA ------------------------------------------------------------
 
 memoriaPrincipal = MemoriaPrincipal()
-memoriaPrincipal.guardarDato(69, 380)
+memoriaPrincipal.guardarDato(380, 380)
 print(memoriaPrincipal.leerDato(380))
 memoriaPrincipal.guardarInstrucciones("999 999 999 999", 384)
 memoriaPrincipal.guardarDato(80,384)
@@ -60,3 +59,4 @@ tcb.imprimir()
 cd = Cache()
 cd.imprimirCacheDatos()
 cd.imprimirCacheInstrucciones()
+print(memoriaPrincipal.leerBloqueDato(380))

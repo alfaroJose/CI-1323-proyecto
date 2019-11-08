@@ -17,6 +17,19 @@ class AreaDatos:
         #La posicion se divide entre 4 debido a que el arreglo comienza en 0 lógicamente
         return self.datos[int(posicion/4)]
 
+    def leerBloque(self, posicion):
+        #La posicion se divide entre 4 debido a que el arreglo comienza en 0 lógicamente
+        bloque = []
+        if posicion >= 0 and posicion <= 380:
+            direccionFisica = int(posicion / 4)
+            numBloque = int(direccionFisica / 4)
+            dirInicialBloque = numBloque * 4
+            for x in range(dirInicialBloque, dirInicialBloque + 4):
+                bloque.append(self.datos[x])
+        else:
+            print("La posicion: " + str(posicion) + " es inválida para leer en el area de datos")
+        return bloque
+
     #Función para guardar un bloque
     def guardarBloqueDatos(self, posicion):
         return 1
