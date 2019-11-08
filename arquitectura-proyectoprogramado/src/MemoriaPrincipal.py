@@ -24,6 +24,17 @@ class MemoriaPrincipal:
         else:
             print("La posicion: " + str(posicion) + " es invalida para leer en el area de datos")
 
+    def leerBloqueDato(self, posicion):
+        bloque = []
+        if posicion >= 0 and posicion <= 380:
+            numBloque = posicion % 4;
+            dirInicialBloque = numBloque * 4;
+            for x in range(dirInicialBloque, dirInicialBloque + 3):
+                bloque.append(self.areaDatos[x])
+        else:
+            print("La posicion: " + str(posicion) + " es inválida para leer en el area de datos")
+        return bloque
+
     #Método para guardar una instrucción en memoria
     #Se recibe un arreglo con las 4 partes de una instrucción y la posicion en la que será guardada
     def guardarInstrucciones(self, instrucciones, posicion):

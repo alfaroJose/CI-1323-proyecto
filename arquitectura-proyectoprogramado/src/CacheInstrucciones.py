@@ -2,10 +2,10 @@
 class CacheInstrucciones:
 
     def __init__(self):
-        self.instrucciones = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+        self.instrucciones = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 'C'],
+                              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 'C'],
+                              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 'C'],
+                              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 'C']]
 
     def imprimir(self):
         for i in range(len(self.instrucciones)):
@@ -14,4 +14,6 @@ class CacheInstrucciones:
             print()
 
     def getInstruccion(self, programCounter):
-        return self.instrucciones[(programCounter % 16) % 4]
+        bloque = self.instrucciones[(programCounter % 16) % 4];
+        if((programCounter % 16) ==bloque[16] and 'C' == bloque[17]):
+            return self.instrucciones[(programCounter % 16) % 4]
