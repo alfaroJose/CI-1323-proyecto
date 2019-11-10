@@ -1,5 +1,6 @@
 from AreaInstrucciones import AreaInstrucciones
 from AreaDatos import AreaDatos
+from threading import RLock
 
 #Clase para representar la memoria principal compartida del procesador
 class MemoriaPrincipal:
@@ -7,6 +8,8 @@ class MemoriaPrincipal:
     def __init__(self):
         self.areaDatos = AreaDatos()
         self.areaInstrucciones = AreaInstrucciones()
+        self.busDatos = RLock()
+        self.busInstrucciones = RLock()
 
     #Método para guardar un dato en memoria principal
     #Se recibe el dato nuevo a guardar y la posición donde se desea guardar en memoria
@@ -24,8 +27,13 @@ class MemoriaPrincipal:
         else:
             print("La posicion: " + str(posicion) + " es invalida para leer en el area de datos")
 
-    def leerBloqueDato(self, posicion):
-        return self.areaDatos.leerBloque(posicion)
+    def leerBloqueDatos(self, posicion):
+        bloque = []
+        if posicion >= 0 and posicion <= 380:
+            bloque = self.areaDatos.leerBloque(posicion)
+        else:
+            print("La posicion: " + str(posicion) + " no existe en el área de datos")
+        return bloque
 
     #Método para guardar una instrucción en memoria
     #Se recibe un arreglo con las 4 partes de una instrucción y la posicion en la que será guardada
@@ -43,18 +51,41 @@ class MemoriaPrincipal:
         else:
             print("La posicion: " + str(posicion) + " es invalida para leer en el area de instrucciones")
 
-        # Función para leer un bloque de instrucciones de memoria
-        # Se recibe la posición donde están almacenadas las 4 partes de la instrucción
-        def leerInstrucciones(self, posicion):
-            bloque = []
-            if posicion >= 384 and posicion <= 1020:
-                numBloque = posicion % 16;
-                dirInicialBloque = numBloque * 4;
-                for x in range(dirInicialBloque, dirInicialBloque + 3):
-                    bloque.append(self.areaDatos[x])
-            else:
-                print("La posicion: " + str(posicion) + " es inválida para leer en el area de datos")
-            return bloque
+    def leerBloqueInstrucciones(self, posicion):
+        bloque = []
+        if posicion >= 384 and posicion <= 1020:
+            bloque = self.areaInstrucciones.leerBloqueInstrucciones(posicion)
+        else:
+            print("La posicion: " + str(posicion) + " no existe en el área de instrucciones")
+        return bloque
+
+    #Método que le permite a las cachés intentar un bloqueo del bus de datos
+    def bloquearBusDatos(self):
+        return self.busDatos.acquire(False) # Con False, el método no bloquea la ejecución, esto para evitar Deadline
+
+    # Método que le permite a las cachés intentar un bloqueo del bus de instrucciones
+    def bloquearBusInstrucciones(self):
+            return self.busInstrucciones.acquire(False)  # Con False, el método no bloquea la ejecución, esto para evitar Deadline
+
+    #Método que le permite a las cachés liberar el bus de datos
+    def liberarBusDatos(self):
+        liberado = True
+        try:
+            self.busDatos.release()
+            #self.busDatos.release()
+        except:
+            liberado = False
+        return liberado
+
+    # Método que le permite a las cachés liberar el bus de instrucciones
+    def liberarBusInstrucciones(self):
+        liberado = True
+        try:
+            self.busInstrucciones.release()
+            #self.busInstrucciones.release()
+        except:
+            liberado = False
+        return liberado
 
     #Método para imprimir el contenido de la memoria principal
     def imprimirMemoria(self):

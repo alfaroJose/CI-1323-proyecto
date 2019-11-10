@@ -1,4 +1,5 @@
 import os
+import threading
 from MemoriaPrincipal import MemoriaPrincipal
 from TCB import TCB
 from Cache import Cache
@@ -32,7 +33,7 @@ def cargarHilillos(hilillos, memoriaPrincipal):
     for hilillo in hilillos:
         file = open(hilillo, "r")
         for f in file:
-            memoriaPrincipal.guardarInstrucciones(f.strip(), posicion)
+            memoriaPrincipal.guardarInstrucciones(list(map(int, f.strip().split(' '))), posicion)
             posicion += 4
         file.close()
 
@@ -41,22 +42,49 @@ def cargarHilillos(hilillos, memoriaPrincipal):
 # ------------------------- PROGRAMA ------------------------------------------------------------
 
 memoriaPrincipal = MemoriaPrincipal()
-memoriaPrincipal.guardarDato(380, 380)
-print(memoriaPrincipal.leerDato(380))
-memoriaPrincipal.guardarInstrucciones("999 999 999 999", 384)
-memoriaPrincipal.guardarDato(80,384)
-memoriaPrincipal.imprimirMemoria()
-print(memoriaPrincipal.leerInstrucciones(384))
+cargarHilillos(leerHilillos(), memoriaPrincipal)
+
+# if memoriaPrincipal.bloquearBusDatos():
+#     print("Bus de datos bloqueado")
+# else:
+#     print("No fue posible bloquear el bus de datos");
+#
+# if memoriaPrincipal.liberarBusDatos():
+#     print("Bus de datos liberado")
+# else:
+#     print("No fue posible liberar el bus de datos");
+
+# if memoriaPrincipal.bloquearBusInstrucciones():
+#     print("Bus de instrucciones bloqueado")
+# else:
+#     print("No fue posible bloquear el bus de instrucciones");
+#
+# if memoriaPrincipal.liberarBusInstrucciones():
+#     print("Bus de instrucciones liberado")
+# else:
+#     print("No fue posible liberar el bus de instrucciones");
+
+
+# memoriaPrincipal.guardarDato(380, 380)
+#print(memoriaPrincipal.leerDato(380))
+#memoriaPrincipal.guardarInstrucciones("999 999 999 999", 388)
+#memoriaPrincipal.guardarDato(80,384)
+#memoriaPrincipal.imprimirMemoria()
+#print(memoriaPrincipal.leerInstrucciones(384))
 #memoriaPrincipal.imprimirAreaDatos()
 #memoriaPrincipal.imprimirAreaInstrucciones()
-cargarHilillos(leerHilillos(), memoriaPrincipal)
-memoriaPrincipal.imprimirMemoria()
+#memoriaPrincipal.imprimirMemoria()
 
-tcb = TCB()
-tcb.agregarHilillo("0")
-tcb.imprimir()
+#tcb = TCB()
+#tcb.agregarHilillo("0")
+#tcb.imprimir()
 
-cd = Cache()
-cd.imprimirCacheDatos()
-cd.imprimirCacheInstrucciones()
-print(memoriaPrincipal.leerBloqueDato(380))
+#cache = Cache(memoriaPrincipal)
+#cache.imprimirCacheDatos()
+#cache.imprimirCacheInstrucciones()
+#cache.getDato(132);
+#cache.imprimirCacheDatos()
+#print(cache.getInstruccion(404))
+#cache.imprimirCacheInstrucciones()
+#print(memoriaPrincipal.leerBloqueDatos(380))
+#print(memoriaPrincipal.leerBloqueInstrucciones(1004))

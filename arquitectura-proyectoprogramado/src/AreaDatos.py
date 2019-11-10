@@ -17,24 +17,19 @@ class AreaDatos:
         #La posicion se divide entre 4 debido a que el arreglo comienza en 0 lógicamente
         return self.datos[int(posicion/4)]
 
+    #función para leer un bloque
     def leerBloque(self, posicion):
-        #La posicion se divide entre 4 debido a que el arreglo comienza en 0 lógicamente
         bloque = []
         if posicion >= 0 and posicion <= 380:
-            direccionFisica = int(posicion / 4)
-            numBloque = int(direccionFisica / 4)
-            dirInicialBloque = numBloque * 4
+            # La posicion se divide entre 4 debido a que el arreglo comienza en 0 lógicamente y costa de 4 elementos
+            direccionFisica = int(posicion / 4) #Dado que la posición lógica está enumerada de 4 en 4
+            numBloque = int(direccionFisica / 4) #Dado que cada bloque consta de 4 palabras y el primero es el 0
+            dirInicialBloque = numBloque * 4 #Dirección física inicial del bloque
             for x in range(dirInicialBloque, dirInicialBloque + 4):
                 bloque.append(self.datos[x])
         else:
             print("La posicion: " + str(posicion) + " es inválida para leer en el area de datos")
         return bloque
-
-    #Función para guardar un bloque
-    def guardarBloqueDatos(self, posicion):
-        return 1
-
-    #función para leer un bloque
 
     #Método que inicializa el arreglo de datos con números del 0 al 380 con incrementos de 4 en 4
     def llenar(self):

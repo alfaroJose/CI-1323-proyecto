@@ -12,33 +12,33 @@ class Nucleo:
     def ejecutarInstruccion(self):
         instruccion = self.cache.getInstruccion(self.programCounter)
         #Falta revisar que los parametros vengan bien!!!!!!!!!!!!!!!
-        if instruccion[0] == 19:
-            self.addi(instruccion[1], instruccion[2], instruccion[3])
-        elif instruccion[0] == 71:
-            self.add(instruccion[1], instruccion[2], instruccion[3])
-        elif instruccion[0] == 83:
-            self.sub(instruccion[1], instruccion[2], instruccion[3])
-        elif instruccion[0] == 72:
-            self.mul(instruccion[1], instruccion[2], instruccion[3])
-        elif instruccion[0] == 56:
+        if instruccion[0] == 5: # lw
+            return 0
+        elif instruccion[0] == 19: # addi
+                self.addi(instruccion[1], instruccion[2], instruccion[3])
+        elif instruccion[0] == 37: # sw
+            return 0
+        elif instruccion[0] == 56: # div
             self.div(instruccion[1], instruccion[2], instruccion[3])
-        elif instruccion[0] == 5:
+        elif instruccion[0] == 71: # add
+            self.add(instruccion[1], instruccion[2], instruccion[3])
+        elif instruccion[0] == 72: # mul
+            self.mul(instruccion[1], instruccion[2], instruccion[3])
+        elif instruccion[0] == 83: # sub
+            self.sub(instruccion[1], instruccion[2], instruccion[3])
+        elif instruccion[0] == 99: # beq
             return 0
-        elif instruccion[0] == 37:
+        elif instruccion[0] == 100: # bne
             return 0
-        elif instruccion[0] == 99:
+        elif instruccion[0] == 103: # jalr
             return 0
-        elif instruccion[0] == 100:
+        elif instruccion[0] == 111: # jal
             return 0
-        elif instruccion[0] == 111:
-            return 0
-        elif instruccion[0] == 103:
-            return 0
-        elif instruccion[0] == 999:
+        elif instruccion[0] == 999: # FIN
             return 0
         else:
             print("Instrucción no reconocida")
-        self.programCounter += 1
+        self.programCounter += 4
 
     # Función que ejecuta la operación addi, la cual suma el contenido de x2 con un inmediato y lo almacena en x1
     def addi(self, x1, x2, n):
