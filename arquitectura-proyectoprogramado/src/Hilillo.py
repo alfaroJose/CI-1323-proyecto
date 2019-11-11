@@ -10,6 +10,9 @@ class Hilillo:
         for i in range(32):
             self.registros.append(0)
 
+    def getIdentificador(self):
+        return self.identificador
+
     #Cambia el estado de un hilillo, 0 para no usado, 1 para usado y 2 para terminado.
     def setEstado(self, estado):
         self.estado = estado
@@ -46,6 +49,6 @@ class Hilillo:
         print(self.reloj, end=' ')
         for i in range(32):
             if i == 31:
-                print(i)
+                print(self.registros[i])
             else:
-                print(i, end= ',')
+                print(self.registros[i], end= ',')

@@ -21,14 +21,55 @@ class TCB:
             else:
                 return None
 
-    #Modifica un hilillo ya agregado
-    #Se usa para cuando se lee una instruccion fin
-    def modificarHilillo(self, modificado):
+    #Metodo que modifica la dirección de un hilillo en el tcb
+    #Recibe el identificador del hilillo y la dirección donde esta ubicado
+    #en memoria principal area de instrucciones
+    def modificarDireccionHilillo(self, identificador, direccion):
         for hilillo in self.tcb:
-            if hilillo.identificador == modificado.identificador:
-                hilillo.setEstado(2)
-                hilillo.setReloj(modificado.getReloj)
-                hilillo.setRegistros(modificado.getRegistros())
+            if hilillo.getIdentificador() == identificador:
+                hilillo.setDireccion(direccion)
+
+    # Metodo que modifica el estado de un hilillo en el tcb
+    # Recibe el identificador del hilillo y el estado nuevo del hilillo
+    def modificarEstadoHilillo(self, identificador, estado):
+        for hilillo in self.tcb:
+            if hilillo.getIdentificador() == identificador:
+                hilillo.setEstado(estado)
+
+    # Metodo que modifica los registros de un hilillo en el tcb
+    # Recibe el identificador del hilillo y los nuevos registros del hilillo
+    def modificarRegistrosHilillo(self, identificador, registros):
+        for hilillo in self.tcb:
+            if hilillo.getIdentificador() == identificador:
+                hilillo.setRegistros(registros)
+
+    # Metodo que modifica el reloj de un hilillo en el tcb
+    # Recibe el identificador del hilillo y el nuevo reloj del hilillo
+    def modificarRelojHilillo(self, identificador, reloj):
+        for hilillo in self.tcb:
+            if hilillo.getIdentificador() == identificador:
+                hilillo.setReloj(reloj)
+
+    # Método que retorna la direccion de un hilllo en tcb
+    # Recibe el identificador del hilillo
+    def obtenerDireccionHilillo(self, identificador):
+        for hilillo in self.tcb:
+            if hilillo.getIdentificador() == identificador:
+                return hilillo.getDireccion()
+
+    # Método que retorna los registros de un hilllo en tcb
+    # Recibe el identificador del hilillo
+    def obtenerRegistrosHilillo(self, identificador):
+        for hilillo in self.tcb:
+            if hilillo.getIdentificador() == identificador:
+                return hilillo.getRegistros()
+
+    # Método que retorna el reloj de un hilllo en tcb
+    # Recibe el identificador del hilillo
+    def obtenerRelojHilillo(self, identificador):
+        for hilillo in self.tcb:
+            if hilillo.getIdentificador() == identificador:
+                return hilillo.getReloj()
 
     #Imprime los datos de cada hilillo en el TCB
     def imprimir(self):

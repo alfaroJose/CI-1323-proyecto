@@ -28,21 +28,26 @@ def leerHilillos():
 
 #Método que recibe un arreglo de direcciones hacía hilillos con instrucciones válidas
 #para el programa y las carga al área de instrucciones de memoria principal
-def cargarHilillos(hilillos, memoriaPrincipal):
+#además carga los hilillos en el tcb
+def cargarHilillos(hilillos, memoriaPrincipal, tcb):
     posicion = 384
     for hilillo in hilillos:
         file = open(hilillo, "r")
+        nombre = os.path.basename(file.name).split('.')[0]
+        tcb.agregarHilillo(nombre)
+        tcb.modificarDireccionHilillo(nombre, posicion)
         for f in file:
             memoriaPrincipal.guardarInstrucciones(list(map(int, f.strip().split(' '))), posicion)
             posicion += 4
         file.close()
 
 
-
 # ------------------------- PROGRAMA ------------------------------------------------------------
 
 memoriaPrincipal = MemoriaPrincipal()
-cargarHilillos(leerHilillos(), memoriaPrincipal)
+tcb = TCB()
+cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
+tcb.imprimir()
 
 # if memoriaPrincipal.bloquearBusDatos():
 #     print("Bus de datos bloqueado")
