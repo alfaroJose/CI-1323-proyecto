@@ -3,6 +3,7 @@ import threading
 from MemoriaPrincipal import MemoriaPrincipal
 from TCB import TCB
 from Cache import Cache
+from Nucleo import Nucleo
 
 # ------------------------ DEFINICION DE VARIABLES Y FUNCIONES -----------------------------------
 #Método que lee todos los archivos .txt que estén presentes en el directorio
@@ -54,6 +55,13 @@ tcb.pedirHilillo(400)
 tcb.pedirHilillo(500)
 tcb.imprimir()
 
+nucleo = Nucleo(memoriaPrincipal)
+nucleo.ejecutarInstruccion()
+nucleo.ejecutarInstruccion()
+nucleo.ejecutarInstruccion()
+nucleo.ejecutarInstruccion()
+tcb.modificarRegistrosHilillo("0",nucleo.getRegistros())
+tcb.imprimir()
 
 # if memoriaPrincipal.bloquearBusDatos():
 #     print("Bus de datos bloqueado")
