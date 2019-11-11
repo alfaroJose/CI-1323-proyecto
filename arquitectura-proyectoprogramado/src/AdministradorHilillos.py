@@ -48,6 +48,12 @@ memoriaPrincipal = MemoriaPrincipal()
 tcb = TCB()
 cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
 tcb.imprimir()
+tcb.pedirHilillo(200)
+tcb.pedirHilillo(300)
+tcb.pedirHilillo(400)
+tcb.pedirHilillo(500)
+tcb.imprimir()
+
 
 # if memoriaPrincipal.bloquearBusDatos():
 #     print("Bus de datos bloqueado")

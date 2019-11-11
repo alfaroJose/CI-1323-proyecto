@@ -15,11 +15,12 @@ class TCB:
     #Devuelve el hilillo sin usar o None en caso de que ya no queden disponibles
     def pedirHilillo(self, reloj):
         for hilillo in self.tcb:
-            if hilillo.estado == 0:
+            if hilillo.getEstado() == 0:
                 hilillo.setEstado(1)
+                hilillo.setReloj(reloj)
                 return hilillo
-            else:
-                return None
+        return None
+
 
     #Metodo que modifica la dirección de un hilillo en el tcb
     #Recibe el identificador del hilillo y la dirección donde esta ubicado
