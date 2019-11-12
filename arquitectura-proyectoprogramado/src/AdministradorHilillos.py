@@ -10,8 +10,9 @@ from Nucleo import Nucleo
 #donde se corre el programa sin importar los subdirectorios que tenga y devuelve un
 #arreglo con las dirrecciones a cada uno de estos archivos
 def leerHilillos():
-    print("Nombre del directorio:")
+    print("Nombre del directorio de hilillos:")
     path, filename = os.path.split(__file__)
+    path += "/hilillos"
     print(path)
 
     files = []
@@ -48,20 +49,22 @@ def cargarHilillos(hilillos, memoriaPrincipal, tcb):
 memoriaPrincipal = MemoriaPrincipal()
 tcb = TCB()
 cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
-tcb.imprimir()
-tcb.pedirHilillo(200)
-tcb.pedirHilillo(300)
-tcb.pedirHilillo(400)
-tcb.pedirHilillo(500)
-tcb.imprimir()
+# tcb.imprimir()
+# tcb.pedirHilillo(200)
+# tcb.pedirHilillo(300)
+# tcb.pedirHilillo(400)
+# tcb.pedirHilillo(500)
+# tcb.imprimir()
 
 nucleo = Nucleo(memoriaPrincipal)
-nucleo.ejecutarInstruccion()
-nucleo.ejecutarInstruccion()
-nucleo.ejecutarInstruccion()
-nucleo.ejecutarInstruccion()
-tcb.modificarRegistrosHilillo("0",nucleo.getRegistros())
-tcb.imprimir()
+nucleo.iniciar()
+print(nucleo.getRegistros(), end="<<<<<<<<<<<<<<<<<<<<<<<-----------")
+#nucleo.ejecutarInstruccion()
+#nucleo.ejecutarInstruccion()
+#nucleo.ejecutarInstruccion()
+#nucleo.ejecutarInstruccion()
+#tcb.modificarRegistrosHilillo("0",nucleo.getRegistros())
+#tcb.imprimir()
 
 # if memoriaPrincipal.bloquearBusDatos():
 #     print("Bus de datos bloqueado")

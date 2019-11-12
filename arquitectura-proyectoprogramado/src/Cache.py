@@ -17,5 +17,14 @@ class Cache:
     def getInstruccion(self, programCounter):
         return self.cacheInstrucciones.getInstruccion(programCounter)
 
-    def getDato(self, programCounter):
-        return self.cacheDatos.getDato(programCounter)
+    def getDato(self, dirLogica, bloquearEjecucion = False):
+        return self.cacheDatos.getDato(dirLogica, bloquearEjecucion)
+
+    def setDato(self, dirLogica, dato, bloquearEjecucion = False):
+        return self.cacheDatos.setDato(dirLogica, dato, bloquearEjecucion)
+
+    def bloquearCacheDatos(self, bloquearEjecucion = False):
+        return self.cacheDatos.bloquearCache(bloquearEjecucion)
+
+    def liberarCacheDatos(self):
+        return self.cacheDatos.liberarCache()

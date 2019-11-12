@@ -5,7 +5,7 @@ class CacheInstrucciones:
     def __init__(self, memoriaPrincipal):
         # Arreglo donde cada elemento tiene el formato: [[bloque], número de bloque, estado]
         self.instrucciones = [
-            [[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]], 24, 'I'],
+            [[], -1, 'C'],
             [[], -1, 'C'],
             [[], -1, 'C'],
             [[], -1, 'C']
