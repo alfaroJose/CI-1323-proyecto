@@ -41,34 +41,34 @@ class Nucleo:
             self.lw(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 19: # addi
-                self.addi(instruccion[1], instruccion[2], instruccion[3])
+            self.addi(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 37: # sw
             self.sw(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 56: # div
-                self.div(instruccion[1], instruccion[2], instruccion[3])
+            self.div(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 71: # add
-                self.add(instruccion[1], instruccion[2], instruccion[3])
+            self.add(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 72: # mul
-                self.mul(instruccion[1], instruccion[2], instruccion[3])
+            self.mul(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 83: # sub
-                self.sub(instruccion[1], instruccion[2], instruccion[3])
+            self.sub(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 99: # beq
-                return 0  # !!!!!!!!!
+            self.beq(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 100: # bne
-                return 0  # !!!!!!!!!
+            self.bne(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 103: # jalr
-                return 0  # !!!!!!!!!
+            self.jalr(instruccion[1], instruccion[2], instruccion[3])
 
         elif instruccion[0] == 111: # jal
-            return 0  # !!!!!!!!!
+            self.jal(instruccion[1], instruccion[3])
 
         elif instruccion[0] == 999: # FIN
             exito = 999
@@ -102,6 +102,31 @@ class Nucleo:
     # Función que ejecuta la operación div, la cual divide el contenido de x2 entre x3 y lo almacena en x1
     def div(self, x1, x2, x3):
         self.registros[x1] = int(self.registros[x2] / self.registros[x3])
+
+    # Función que ejecuta la operación beq, la cual hace un branch modificando el pc con el tercer
+    # parámetro, sumando este parametro * 4 y sumandolo al pc, en caso de que los primeros dos parámetros sean iguales
+    def beq(self, x1, x2, etiq):
+        if x1 == x2:
+            self.programCounter += etiq*4
+
+    # Función que ejecuta la operación bne, la cual hace un branch modificando el pc con el tercer parámetro,
+    # sumando este parametro * 4 y sumandolo al pc, en caso de que los primeros dos parámetros NO sean iguales
+    def bne(self, x1, x2, etiq):
+        if x1 != x2:
+            self.programCounter += etiq*4
+
+    # Función que ejecuta la operación jal, la cual hace un jump, guardando el pc actual en un registro
+    # especificado por el primer parámetro y modificandolo luego con el inmediato en el tercer parámetro
+    def jal(self, x1, n):
+        self.registros[x1] = self.programCounter
+        self.programCounter += n
+
+    # Función que ejecuta la operación jal, la cual hace un jump, guardando el pc actual en un registro
+    # especificado por el primer parámetro y modificandolo luego con el inmediato en el tercer parámetro
+    # sumado al valor en el registro especificado en el segundo parámetro
+    def jalr(self, x1, x2, n):
+        self.registros[x1] = self.programCounter
+        self.programCounter = self.registros[x2] + n
 
     def setRegistros(self, registros):
         self.registros = registros
