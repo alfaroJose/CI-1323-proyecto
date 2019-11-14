@@ -1,13 +1,22 @@
+import threading
 from Cache import Cache
 
 #Clase para representar un nlucleo de un procesador
-class Nucleo:
+class Nucleo(threading.Thread):
 
-    def __init__(self, memoriaPrincipal):
-        self.cache = Cache(memoriaPrincipal)
+    def __init__(self, nucleo, memoriaPrincipal, barrera, cacheDatosHermana = None):
+        threading.Thread.__init__(self)
+        self.nucleo = nucleo
+        self.name = nucleo
+        self.cache = Cache(memoriaPrincipal, cacheDatosHermana)
+        self.barrera = barrera
         self.programCounter = 384
         self.registros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.instructionSet = {5: "lw", 19: "addi", 37: "sw", 56: "div", 71: "add", 72: "mul", 83: "sub", 99: "beq", 100: "bne", 103: "jalr", 111: "jal", 999: "FIN"}
+
+    def run(self):
+        self.barrera.wait() #Barrera para hacer que la ejecución de los núcleos inicie al mismo tiempo
+        self.iniciar()
 
     #inicia la ejecución del núcleo
     def iniciar(self):
@@ -17,6 +26,7 @@ class Nucleo:
             # El program counter debe ser incrementado inmediatamente después de leer la instrucción
             self.programCounter += 4
             resultadoEI = self.ejecutarInstruccion(instruccion)
+        print(self.registros, end="Nucleo " + str(self.nucleo) + '\n')
 
     #Metodo que analiza una instrucción, la identifica y ejecuta su función correspondiente
     def ejecutarInstruccion(self, instruccion):
@@ -33,7 +43,7 @@ class Nucleo:
             exito = False
             print("Parámetros incorrectos para instrucción " + str(instruccion[0]) + ": " + self.instructionSet[instruccion[0]] + ". PC = " + str(self.programCounter)) +". Todos los parámetros deben de ser 0"
 
-        elif 37 != instruccion[0] and 99 !=  instruccion[0] and 100 != instruccion[0] and 0 == instruccion[1]:
+        elif 37 != instruccion[0] and 99 !=  instruccion[0] and 100 != instruccion[0] and 999 != instruccion[0] and 0 == instruccion[1]:
             exito = False
             print("El registro X0 es un registro destino inválido.")
 

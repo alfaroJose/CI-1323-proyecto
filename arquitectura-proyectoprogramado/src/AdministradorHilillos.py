@@ -2,8 +2,7 @@ import os
 import threading
 from MemoriaPrincipal import MemoriaPrincipal
 from TCB import TCB
-from Cache import Cache
-from Nucleo import Nucleo
+from Procesador import Procesador
 
 # ------------------------ DEFINICION DE VARIABLES Y FUNCIONES -----------------------------------
 #Método que lee todos los archivos .txt que estén presentes en el directorio
@@ -49,6 +48,12 @@ def cargarHilillos(hilillos, memoriaPrincipal, tcb):
 memoriaPrincipal = MemoriaPrincipal()
 tcb = TCB()
 cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
+procesador = Procesador(memoriaPrincipal)
+
+
+
+
+
 # tcb.imprimir()
 # tcb.pedirHilillo(200)
 # tcb.pedirHilillo(300)
@@ -56,9 +61,9 @@ cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
 # tcb.pedirHilillo(500)
 # tcb.imprimir()
 
-nucleo = Nucleo(memoriaPrincipal)
-nucleo.iniciar()
-print(nucleo.getRegistros(), end="<<<<<<<<<<<<<<<<<<<<<<<-----------")
+#nucleo = Nucleo(memoriaPrincipal)
+#nucleo.iniciar()
+#print(nucleo.getRegistros(), end="<<<<<<<<<<<<<<<<<<<<<<<-----------")
 #nucleo.ejecutarInstruccion()
 #nucleo.ejecutarInstruccion()
 #nucleo.ejecutarInstruccion()

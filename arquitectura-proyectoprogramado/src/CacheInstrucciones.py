@@ -5,10 +5,10 @@ class CacheInstrucciones:
     def __init__(self, memoriaPrincipal):
         # Arreglo donde cada elemento tiene el formato: [[bloque], número de bloque, estado]
         self.instrucciones = [
-            [[], -1, 'C'],
-            [[], -1, 'C'],
-            [[], -1, 'C'],
-            [[], -1, 'C']
+            [[], -1],
+            [[], -1],
+            [[], -1],
+            [[], -1]
         ]
         self.memoriaPrincipal = memoriaPrincipal
 
@@ -18,16 +18,16 @@ class CacheInstrucciones:
                 print(self.instrucciones[i][j], end=' ')
             print()
 
-    # aquí hay que implementar el bloqueo del bus
     def getInstruccion(self, programCounter):
         numBloque = int(programCounter / 4 / 4)
         indexCache = int(numBloque % 4)
         bloqueCache = self.instrucciones[indexCache]
         bloque = bloqueCache[0]
-        if(numBloque != bloqueCache[1] or 'C' != bloqueCache[2]):
+        if(numBloque != bloqueCache[1]):
+            self.memoriaPrincipal.bloquearBusInstrucciones()
             bloque = self.memoriaPrincipal.leerBloqueInstrucciones(programCounter)
+            self.memoriaPrincipal.liberarBusInstrucciones()
             self.instrucciones[indexCache][0] = bloque
             self.instrucciones[indexCache][1] = numBloque
-            self.instrucciones[indexCache][2] = 'C'
         instruccion = bloque[int((programCounter - (numBloque * 4 * 4)) / 4)]
         return instruccion
