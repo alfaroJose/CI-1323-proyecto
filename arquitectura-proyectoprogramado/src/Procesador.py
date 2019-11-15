@@ -3,12 +3,13 @@ from Nucleo import Nucleo
 
 #Clase para representar al procesador RISC-V
 class Procesador:
-    def __init__(self, memoriaPrincipal):
+    def __init__(self, memoriaPrincipal, tcb):
         self.totalNucleos = 2
         self.barrera = Barrier(self.totalNucleos)
         self.memoriaPrincipal = memoriaPrincipal
-        self.nucleo0 = Nucleo(0, self.memoriaPrincipal, self.barrera)
-        self.nucleo1 = Nucleo(1, self.memoriaPrincipal, self.barrera, self.nucleo0.cache.cacheDatos)
+        self.tcb = tcb
+        self.nucleo0 = Nucleo(0, self.memoriaPrincipal, tcb, self.barrera)
+        self.nucleo1 = Nucleo(1, self.memoriaPrincipal, tcb, self.barrera, self.nucleo0.cache.cacheDatos)
         self.nucleo0.cache.cacheDatos.cacheHermana = self.nucleo1.cache.cacheDatos
         self.iniciar()
 

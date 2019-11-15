@@ -4,11 +4,12 @@ from Cache import Cache
 #Clase para representar un nlucleo de un procesador
 class Nucleo(threading.Thread):
 
-    def __init__(self, nucleo, memoriaPrincipal, barrera, cacheDatosHermana = None):
+    def __init__(self, nucleo, memoriaPrincipal, tcb, barrera, cacheDatosHermana = None):
         threading.Thread.__init__(self)
         self.nucleo = nucleo
         self.name = nucleo
         self.cache = Cache(memoriaPrincipal, cacheDatosHermana)
+        self.tcb = tcb
         self.barrera = barrera
         self.programCounter = 384
         self.registros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

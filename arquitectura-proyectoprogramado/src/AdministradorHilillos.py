@@ -48,7 +48,7 @@ def cargarHilillos(hilillos, memoriaPrincipal, tcb):
 memoriaPrincipal = MemoriaPrincipal()
 tcb = TCB()
 cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
-procesador = Procesador(memoriaPrincipal)
+procesador = Procesador(memoriaPrincipal, tcb)
 
 
 

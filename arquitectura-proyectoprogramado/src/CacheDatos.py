@@ -56,7 +56,7 @@ class CacheDatos:
         dirFisica = int(dirLogica / 4)
         datoGuardado = False
 
-        while False == datoGuardado:
+        while not datoGuardado:
             self.bloquearCache(bloquearEjecucion)
             if not self.memoriaPrincipal.bloquearBusDatos():
                 self.liberarCache()
