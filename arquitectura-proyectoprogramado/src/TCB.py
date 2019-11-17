@@ -1,12 +1,12 @@
 from Hilillo import Hilillo
-from threading import RLock
+from threading import Lock
 
 #Clase para administrar hilillos
 class TCB:
 
     def __init__(self):
         self.tcb = []
-        self.candadoTCB = RLock()
+        self.candadoTCB = Lock()
 
     #Agrega un hilillo al TCB
     def agregarHilillo(self, identificador):
@@ -15,12 +15,13 @@ class TCB:
 
     #Pide un hilillo que este sin usar al TCB
     #Devuelve el hilillo sin usar o None en caso de que ya no queden disponibles
-    def pedirHilillo(self, nucleo):
+    def pedirHilillo(self, reloj):
         hilillo = None
         self.candadoTCB.acquire()
         for h in self.tcb:
             if h.getEstado() == 0:
-                h.setNucleo(nucleo)
+                h.setEstado(1)
+                h.setReloj(reloj)
                 hilillo = h
                 break
         self.candadoTCB.release()
