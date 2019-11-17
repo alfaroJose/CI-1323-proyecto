@@ -51,10 +51,9 @@ cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
 #tcb.imprimir()
 #memoriaPrincipal.imprimirAreaInstrucciones()
 procesador = Procesador(memoriaPrincipal, tcb)
-print("Info de hilillos en TCB:")
 tcb.imprimir()
-print("Memoria principal, área de datos:")
-memoriaPrincipal.imprimirAreaDatos()
+
+
 
 
 # tcb.imprimir()
@@ -108,3 +107,13 @@ memoriaPrincipal.imprimirAreaDatos()
 #tcb = TCB()
 #tcb.agregarHilillo("0")
 #tcb.imprimir()
+
+#cache = Cache(memoriaPrincipal)
+#cache.imprimirCacheDatos()
+#cache.imprimirCacheInstrucciones()
+#cache.getDato(132);
+#cache.imprimirCacheDatos()
+#print(cache.getInstruccion(404))
+#cache.imprimirCacheInstrucciones()
+#print(memoriaPrincipal.leerBloqueDatos(380))
+#print(memoriaPrincipal.leerBloqueInstrucciones(1004))
