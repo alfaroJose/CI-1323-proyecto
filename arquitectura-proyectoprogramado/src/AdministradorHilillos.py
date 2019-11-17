@@ -54,7 +54,7 @@ cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
 procesador = Procesador(memoriaPrincipal, tcb)
 #tcb.imprimir()
 memoriaPrincipal.imprimirAreaDatos()
-
+#memoriaPrincipal.imprimirAreaInstrucciones()
 
 
 

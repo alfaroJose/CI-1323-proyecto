@@ -32,8 +32,9 @@ class Nucleo(threading.Thread):
             while True == resultadoEI:
                 self.ir = self.cache.getInstruccion(self.programCounter)
                 #print(self.ir, '\n')
-                # El program counter debe ser incrementado inmediatamente después de leer la instrucción
+                # El program counter debe y es incrementado inmediatamente después de leer la instrucción
                 self.programCounter += 4
+                #print(self.registros, end="\n")
                 resultadoEI = self.ejecutarInstruccion()
             self.hililloActual.setEstado(self.ir)
             self.hililloActual.setReloj(self.reloj)

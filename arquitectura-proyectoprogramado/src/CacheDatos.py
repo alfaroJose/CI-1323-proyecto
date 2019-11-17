@@ -87,8 +87,7 @@ class CacheDatos:
 
     # Método que le permite a la caché intentar un bloqueo de su estructura interna
     def bloquearCache(self, bloquearEjecucion=False):
-        return self.candadoCache.acquire(
-            bloquearEjecucion)  # Con False, el método no bloquea la ejecución, esto para evitar DeadLocks
+        return self.candadoCache.acquire(bloquearEjecucion)  # Con False, el método no bloquea la ejecución, esto para evitar DeadLocks
 
     # Método que le permite a las cachés liberar el bus de datos
     def liberarCache(self):
