@@ -4,8 +4,9 @@ class Hilillo:
     def __init__(self, identificador):
         self.identificador = identificador
         self.estado = 0
+        self.nucleo = None;
         self.direccion = -1
-        self.reloj = 0
+        self.reloj = 0 # Almacena el número de ciclo en el que el hilillo terminó
         self.registros = []
         for i in range(32):
             self.registros.append(0)
@@ -19,6 +20,13 @@ class Hilillo:
 
     def getEstado(self):
         return self.estado
+
+    # Guarda el número de núcleo que lo ejecutará
+    def setNucleo(self, nucleo):
+        self.nucleo = nucleo
+
+    def getNucleo(self):
+        return self.nucleo
 
     def setDireccion(self, direccion):
         self.direccion = direccion
@@ -44,6 +52,7 @@ class Hilillo:
 
     def imprimir(self):
         print(self.identificador, end=' ')
+        print(self.nucleo, end=' ')
         print(self.estado, end=' ')
         print(self.direccion, end=' ')
         print(self.reloj, end=' ')
