@@ -111,8 +111,8 @@ class Nucleo(threading.Thread):
         self.registros[rd] = self.cache.getDato(int(desplazamiento + rf1), True)
 
     # Función que ejecuta la operación addi, la cual suma el contenido de x2 con un inmediato y lo almacena en x1
-    def addi(self, x1, x2, n):
-        self.registros[x1] = int(self.registros[x2] + n)
+    def addi(self, rd, rf, inmediato):
+        self.registros[rd] = int(inmediato + self.registros[rf])
 
     # Funcion que ejecuta la instrucción sw
     def sw(self, rf1, rf2, desplazamiento):
@@ -121,45 +121,45 @@ class Nucleo(threading.Thread):
         self.cache.setDato(int(desplazamiento + rf1), rf2, True)
 
     # Función que ejecuta la operación add, la cual suma el contenido de x2 con x3 y lo almacena en x1
-    def add(self, x1, x2, x3):
-        self.registros[x1] = int(self.registros[x2] + self.registros[x3])
+    def add(self, rd, rf1, rf2):
+        self.registros[rd] = int(self.registros[rf1] + self.registros[rf2])
 
     # Función que ejecuta la operación sub, la cual resta el contenido de x2 con x3 y lo almacena en x1
-    def sub(self, x1, x2, x3):
-        self.registros[x1] = int(self.registros[x2] - self.registros[x3])
+    def sub(self, rd, rf1, rf2):
+        self.registros[rd] = int(self.registros[rf1] - self.registros[rf2])
 
     # Función que ejecuta la operación mul, la cual multiplica el contenido de x2 con x3 y lo almacena en x1
-    def mul(self, x1, x2, x3):
-        self.registros[x1] = int(self.registros[x2] * self.registros[x3])
+    def mul(self, rd, rf1, rf2):
+        self.registros[rd] = int(self.registros[rf1] * self.registros[rf2])
 
     # Función que ejecuta la operación div, la cual divide el contenido de x2 entre x3 y lo almacena en x1
-    def div(self, x1, x2, x3):
-        self.registros[x1] = int(self.registros[x2] / self.registros[x3])
+    def div(self, rd, rf1, rf2):
+        self.registros[rd] = int(self.registros[rf1] / self.registros[rf2])
 
     # Función que ejecuta la operación beq, la cual hace un branch modificando el pc con el tercer
     # parámetro, sumando este parametro * 4 y sumandolo al pc, en caso de que los primeros dos parámetros sean iguales
-    def beq(self, x1, x2, etiq):
-        if self.registros[x1] == self.registros[x2]:
-            self.programCounter += etiq*4
+    def beq(self, rf1, rf2, etiq):
+        if self.registros[rf1] == self.registros[rf2]:
+            self.programCounter += int(etiq * 4)
 
     # Función que ejecuta la operación bne, la cual hace un branch modificando el pc con el tercer parámetro,
     # sumando este parametro * 4 y sumandolo al pc, en caso de que los primeros dos parámetros NO sean iguales
-    def bne(self, x1, x2, etiq):
-        if self.registros[x1] != self.registros[x2]:
-            self.programCounter += etiq*4
+    def bne(self, rf1, rf2, etiq):
+        if self.registros[rf1] != self.registros[rf2]:
+            self.programCounter += int(etiq * 4)
 
     # Función que ejecuta la operación jal, la cual hace un jump, guardando el pc actual en un registro
     # especificado por el primer parámetro y modificandolo luego con el inmediato en el tercer parámetro
-    def jal(self, x1, n):
-        self.registros[x1] = self.programCounter
-        self.programCounter += n
+    def jal(self, rd, inmediato):
+        self.registros[rd] = self.programCounter
+        self.programCounter += inmediato
 
     # Función que ejecuta la operación jal, la cual hace un jump, guardando el pc actual en un registro
     # especificado por el primer parámetro y modificandolo luego con el inmediato en el tercer parámetro
     # sumado al valor en el registro especificado en el segundo parámetro
-    def jalr(self, x1, x2, n):
-        self.registros[x1] = self.programCounter
-        self.programCounter = self.registros[x2] + n
+    def jalr(self, rd, rf1, inmediato):
+        self.registros[rd] = self.programCounter
+        self.programCounter = self.registros[rf1] + inmediato
 
     def setRegistros(self, registros):
         self.registros = registros

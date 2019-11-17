@@ -1,8 +1,10 @@
 from threading import RLock
+
+
 # Clase que representa una cache de datos de un núcleo
 class CacheDatos:
 
-    def __init__(self, memoriaPrincipal, cacheHermana = None):
+    def __init__(self, memoriaPrincipal, cacheHermana=None):
         # Arreglo donde cada elemento tiene el formato: [[bloque], número de bloque, estado]
         self.datos = [
             [[], -1, 'C'],
@@ -21,7 +23,7 @@ class CacheDatos:
             print()
 
     # aquí hay que implementar el bloqueo del bus y cachés
-    def getDato(self, dirLogica, bloquearEjecucion = False):
+    def getDato(self, dirLogica, bloquearEjecucion=False):
         dirFisica = int(dirLogica / 4)
         numBloque = int(dirFisica / 4)
         indexCache = int(numBloque % 4)
@@ -30,7 +32,7 @@ class CacheDatos:
         bloque = []
         dato = None
 
-        while None == dato:
+        while dato is None:
             self.bloquearCache(bloquearEjecucion)
             bloqueCache = self.datos[indexCache]
             bloque = bloqueCache[0]
@@ -52,7 +54,7 @@ class CacheDatos:
         return dato
 
     # aquí hay que implementar el bloqueo del bus y cachés
-    def setDato(self, dirLogica, dato, bloquearEjecucion = False):
+    def setDato(self, dirLogica, dato, bloquearEjecucion=False):
         numBloque = int(dirLogica / 4 / 4)
         indexCache = int(numBloque % 4)
         dirFisica = int(dirLogica / 4)
@@ -74,25 +76,26 @@ class CacheDatos:
             if numBloque == self.cacheHermana.datos[indexCache]:
                 self.cacheHermana.datos[indexCache][2] = 'I'
 
-            #print(dirFisica, end='\n')
+            # print(dirFisica, end='\n')
             self.memoriaPrincipal.guardarDato(dato, dirFisica)
-            #self.memoriaPrincipal.imprimirAreaDatos()
+            # self.memoriaPrincipal.imprimirAreaDatos()
             self.cacheHermana.liberarCache()
             self.memoriaPrincipal.liberarBusDatos()
             self.liberarCache()
             datoGuardado = True
         return True
 
-    #Método que le permite a la caché intentar un bloqueo de su estructura interna
-    def bloquearCache(self, bloquearEjecucion = False):
-        return self.candadoCache.acquire(bloquearEjecucion) # Con False, el método no bloquea la ejecución, esto para evitar DeadLocks
+    # Método que le permite a la caché intentar un bloqueo de su estructura interna
+    def bloquearCache(self, bloquearEjecucion=False):
+        return self.candadoCache.acquire(
+            bloquearEjecucion)  # Con False, el método no bloquea la ejecución, esto para evitar DeadLocks
 
-    #Método que le permite a las cachés liberar el bus de datos
+    # Método que le permite a las cachés liberar el bus de datos
     def liberarCache(self):
         liberada = True
         try:
             self.candadoCache.release()
-            #self.busDatos.release()
+            # self.busDatos.release()
         except:
             liberada = False
         return liberada
