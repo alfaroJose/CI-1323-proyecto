@@ -8,7 +8,7 @@ class Nucleo(threading.Thread):
         threading.Thread.__init__(self)
         self.nucleo = nucleo
         self.name = nucleo
-        self.reloj  = 0
+        self.reloj = 0
         self.ir = [] #Instruction register
         self.cache = Cache(memoriaPrincipal, cacheDatosHermana)
         self.tcb = tcb
@@ -19,8 +19,8 @@ class Nucleo(threading.Thread):
         self.instructionSet = {5: "lw", 19: "addi", 37: "sw", 56: "div", 71: "add", 72: "mul", 83: "sub", 99: "beq", 100: "bne", 103: "jalr", 111: "jal", 999: "FIN"}
 
     def run(self):
-        self.barrera.wait() #Barrera para hacer que la ejecución de los núcleos inicie al mismo tiempo
-        self.hililloActual = self.tcb.pedirHilillo(self.programCounter)
+        self.barrera.wait() #Barrera para hacer que la ejecución de los núcleos inicie "al mismo tiempo"
+        self.hililloActual = self.tcb.pedirHilillo(self.nucleo)
         self.iniciar()
 
     #inicia la ejecución del núcleo
@@ -34,15 +34,14 @@ class Nucleo(threading.Thread):
                 # El program counter debe ser incrementado inmediatamente después de leer la instrucción
                 self.programCounter += 4
                 resultadoEI = self.ejecutarInstruccion()
+            self.hililloActual.setEstado(self.ir[0])
+            self.hililloActual.setReloj(self.reloj)
             self.tcb.modificarRegistrosHilillo(self.hililloActual.getIdentificador(), self.registros)
             #print(self.registros, end="Nucleo " + str(self.nucleo) + "\n\n")
-            self.getHilillo()
+            self.hililloActual = self.tcb.pedirHilillo(self.nucleo)
 
     def reiniciarRegistros(self):
         self.registros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-    def getHilillo(self):
-        self.hililloActual = self.tcb.pedirHilillo(self.programCounter)
 
     #Metodo que analiza una instrucción, la identifica y ejecuta su función correspondiente
     def ejecutarInstruccion(self):
