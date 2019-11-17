@@ -90,10 +90,10 @@ class MemoriaPrincipal:
 
     #Método para imprimir el contenido de la memoria principal
     def imprimirMemoria(self):
-        print("Área de datos:")
+        print("Área de datos")
         self.areaDatos.imprimir(self.areaInstrucciones.tamanoMaximo())
         print()
-        print("Área de instrucciones:")
+        print("Área de instrucciones")
         self.areaInstrucciones.imprimir(self.areaDatos.tamanoMaximo())
         print()
 

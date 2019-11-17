@@ -4,7 +4,7 @@ class Hilillo:
     def __init__(self, identificador):
         self.identificador = identificador
         self.estado = -1
-        self.nucleo = None;
+        self.nucleo = None
         self.direccion = -1
         self.reloj = 0 # Almacena el número de ciclo en el que el hilillo terminó
         self.registros = []
@@ -61,3 +61,18 @@ class Hilillo:
                 print(self.registros[i])
             else:
                 print(self.registros[i], end= ',')
+
+    def sizeID(self):
+        return len(self.identificador)
+
+    def sizeNucleo(self):
+        return len(str(self.nucleo))
+
+    def sizeEstado(self):
+        return len(str(self.estado))
+
+    def sizeDireccion(self):
+        return len(str(self.direccion))
+
+    def sizeReloj(self):
+        return len(str(self.reloj))
