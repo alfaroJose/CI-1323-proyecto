@@ -22,8 +22,10 @@ class CacheDatos:
 
     # aquí hay que implementar el bloqueo del bus y cachés
     def getDato(self, dirLogica, bloquearEjecucion = False):
-        numBloque = int(dirLogica / 4 / 4)
+        dirFisica = int(dirLogica / 4)
+        numBloque = int(dirFisica / 4)
         indexCache = int(numBloque % 4)
+
         bloqueCache = []
         bloque = []
         dato = None
@@ -40,12 +42,12 @@ class CacheDatos:
                 #     self.memoriaPrincipal.liberarBusDatos()
                 #     self.liberarCache()
                 #     continue
-                bloque = self.memoriaPrincipal.leerBloqueDatos(dirLogica)
+                bloque = self.memoriaPrincipal.leerBloqueDatos(dirFisica)
                 self.memoriaPrincipal.liberarBusDatos()
                 self.datos[indexCache][0] = bloque
                 self.datos[indexCache][1] = numBloque
                 self.datos[indexCache][2] = 'C'
-            dato = bloque[int((dirLogica / 4) - (numBloque * 4))]
+            dato = bloque[int(dirFisica - (numBloque * 4))]
             self.liberarCache()
         return dato
 

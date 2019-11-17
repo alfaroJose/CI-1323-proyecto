@@ -28,12 +28,12 @@ class MemoriaPrincipal:
         else:
             print("La posicion: " + str(posicion) + " es invalida para leer en el area de datos")
 
-    def leerBloqueDatos(self, posicion):
+    def leerBloqueDatos(self, direccionFisica):
         bloque = []
-        if posicion >= 0 and posicion <= 380:
-            bloque = self.areaDatos.leerBloque(posicion)
+        if direccionFisica >= 0 and direccionFisica <= 95:
+            bloque = self.areaDatos.leerBloque(direccionFisica)
         else:
-            print("La posicion: " + str(posicion) + " no existe en el área de datos")
+            print("La posicion: " + str(int(direccionFisica * 4)) + " no existe en el área de datos")
         return bloque
 
     #Método para guardar una instrucción en memoria
