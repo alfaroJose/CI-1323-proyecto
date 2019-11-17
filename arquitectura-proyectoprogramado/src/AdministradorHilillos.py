@@ -48,7 +48,7 @@ def cargarHilillos(hilillos, memoriaPrincipal, tcb):
 memoriaPrincipal = MemoriaPrincipal()
 tcb = TCB()
 cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
-#tcb.imprimir()
+tcb.imprimir()
 #memoriaPrincipal.imprimirAreaInstrucciones()
 procesador = Procesador(memoriaPrincipal, tcb)
 tcb.imprimir()
