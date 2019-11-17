@@ -9,8 +9,8 @@ class Procesador:
         self.memoriaPrincipal = memoriaPrincipal
         self.tcb = tcb
         self.nucleo0 = Nucleo(0, self.memoriaPrincipal, tcb, self.barrera)
-        self.nucleo1 = Nucleo(1, self.memoriaPrincipal, tcb, self.barrera, self.nucleo0.cache.cacheDatos)
-        self.nucleo0.cache.cacheDatos.cacheHermana = self.nucleo1.cache.cacheDatos
+        self.nucleo1 = Nucleo(1, self.memoriaPrincipal, tcb, self.barrera, self.nucleo0.cache)
+        self.nucleo0.cache.setCacheHermana(self.nucleo1.cache)
         self.iniciar()
 
     def iniciar(self):

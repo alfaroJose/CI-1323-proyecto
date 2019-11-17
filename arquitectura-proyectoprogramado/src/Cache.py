@@ -4,8 +4,13 @@ from CacheInstrucciones import CacheInstrucciones
 #Clase controladora de cachés
 class Cache:
 
-    def __init__(self, memoriaPrincipal, cacheDatosHermana):
-        self.cacheDatos = CacheDatos(memoriaPrincipal, cacheDatosHermana)
+    def __init__(self, nucleo, memoriaPrincipal, cacheHermana):
+        self.nucleoPadre = nucleo
+        self.cacheHermana = cacheHermana
+        if(self.cacheHermana):
+            self.cacheDatos = CacheDatos(memoriaPrincipal, self.cacheHermana.cacheDatos)
+        else:
+            self.cacheDatos = CacheDatos(memoriaPrincipal)
         self.cacheInstrucciones = CacheInstrucciones(memoriaPrincipal)
 
     def imprimirCacheDatos(self):
@@ -13,6 +18,10 @@ class Cache:
 
     def imprimirCacheInstrucciones(self):
         self.cacheInstrucciones.imprimir()
+
+    def setCacheHermana(self, cachehermana):
+        self.cacheHermana = cachehermana
+        self.cacheDatos.cacheHermana = self.cacheHermana.cacheDatos
 
     def getInstruccion(self, programCounter):
         return self.cacheInstrucciones.getInstruccion(programCounter)

@@ -4,13 +4,13 @@ from Cache import Cache
 #Clase para representar un nlucleo de un procesador
 class Nucleo(threading.Thread):
 
-    def __init__(self, nucleo, memoriaPrincipal, tcb, barrera, cacheDatosHermana = None):
+    def __init__(self, nucleo, memoriaPrincipal, tcb, barrera, cacheHermana = None):
         threading.Thread.__init__(self)
         self.nucleo = nucleo
         self.name = nucleo
         self.reloj = 0
         self.ir = [] #Instruction register
-        self.cache = Cache(memoriaPrincipal, cacheDatosHermana)
+        self.cache = Cache(self, memoriaPrincipal, cacheHermana)
         self.tcb = tcb
         self.barrera = barrera
         self.programCounter = 384
@@ -34,7 +34,7 @@ class Nucleo(threading.Thread):
                 # El program counter debe ser incrementado inmediatamente después de leer la instrucción
                 self.programCounter += 4
                 resultadoEI = self.ejecutarInstruccion()
-            self.hililloActual.setEstado(self.ir[0])
+            self.hililloActual.setEstado(self.ir)
             self.hililloActual.setReloj(self.reloj)
             self.tcb.modificarRegistrosHilillo(self.hililloActual.getIdentificador(), self.registros)
             #print(self.registros, end="Nucleo " + str(self.nucleo) + "\n\n")
@@ -142,8 +142,10 @@ class Nucleo(threading.Thread):
     # Función que ejecuta la operación bne, la cual hace un branch modificando el pc con el tercer parámetro,
     # sumando este parametro * 4 y sumandolo al pc, en caso de que los primeros dos parámetros NO sean iguales
     def bne(self, x1, x2, etiq):
-        if x1 != x2:
+        if x1 != x2 and etiq >= 0:
             self.programCounter += etiq*4
+        else:
+            exito = False
 
     # Función que ejecuta la operación jal, la cual hace un jump, guardando el pc actual en un registro
     # especificado por el primer parámetro y modificandolo luego con el inmediato en el tercer parámetro

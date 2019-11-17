@@ -2,7 +2,7 @@ from threading import RLock
 # Clase que representa una cache de datos de un núcleo
 class CacheDatos:
 
-    def __init__(self, memoriaPrincipal, cacheHermana):
+    def __init__(self, memoriaPrincipal, cacheHermana = None):
         # Arreglo donde cada elemento tiene el formato: [[bloque], número de bloque, estado]
         self.datos = [
             [[], -1, 'C'],
