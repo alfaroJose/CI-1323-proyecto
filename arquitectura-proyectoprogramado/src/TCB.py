@@ -21,6 +21,7 @@ class TCB:
         for h in self.tcb:
             if h.getEstado() == 0:
                 h.setNucleo(nucleo)
+                h.setEstado(1)
                 hilillo = h
                 break
         self.candadoTCB.release()
@@ -80,5 +81,7 @@ class TCB:
 
     #Imprime los datos de cada hilillo en el TCB
     def imprimir(self):
+        print("Id Núcleo Estado PC  Ciclos Registros")
         for hilillo in self.tcb:
             hilillo.imprimir()
+        print("Estado 999 significa que termino sin problemas, otro estado significaría que hubo un error")
