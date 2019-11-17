@@ -55,8 +55,9 @@ procesador = Procesador(memoriaPrincipal, tcb)
 print("Información del TCB:")
 tcb.imprimir()
 print("Área de datos:")
+#tcb.imprimir()
 memoriaPrincipal.imprimirAreaDatos()
-
+#memoriaPrincipal.imprimirAreaInstrucciones()
 
 
 
