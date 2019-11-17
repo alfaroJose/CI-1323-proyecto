@@ -1,10 +1,12 @@
 from Hilillo import Hilillo
+from threading import Lock
 
 #Clase para administrar hilillos
 class TCB:
 
     def __init__(self):
         self.tcb = []
+        self.candadoTCB = Lock()
 
     #Agrega un hilillo al TCB
     def agregarHilillo(self, identificador):
@@ -14,12 +16,16 @@ class TCB:
     #Pide un hilillo que este sin usar al TCB
     #Devuelve el hilillo sin usar o None en caso de que ya no queden disponibles
     def pedirHilillo(self, reloj):
-        for hilillo in self.tcb:
-            if hilillo.getEstado() == 0:
-                hilillo.setEstado(1)
-                hilillo.setReloj(reloj)
-                return hilillo
-        return None
+        hilillo = None
+        self.candadoTCB.acquire()
+        for h in self.tcb:
+            if h.getEstado() == 0:
+                h.setEstado(1)
+                h.setReloj(reloj)
+                hilillo = h
+                break
+        self.candadoTCB.release()
+        return hilillo
 
 
     #Metodo que modifica la dirección de un hilillo en el tcb
@@ -43,6 +49,7 @@ class TCB:
         for hilillo in self.tcb:
             if hilillo.getIdentificador() == identificador:
                 hilillo.setRegistros(registros)
+                break
 
     # Metodo que modifica el reloj de un hilillo en el tcb
     # Recibe el identificador del hilillo y el nuevo reloj del hilillo
