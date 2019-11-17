@@ -52,6 +52,7 @@ tcb.imprimir()
 #memoriaPrincipal.imprimirAreaInstrucciones()
 procesador = Procesador(memoriaPrincipal, tcb)
 tcb.imprimir()
+memoriaPrincipal.imprimirMemoria()
 
 
 

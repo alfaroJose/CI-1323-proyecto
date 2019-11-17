@@ -55,7 +55,7 @@ class Nucleo(threading.Thread):
             exito = False
             print("La instrucción: " + str(self.ir[0]) + " no corresponde a la arquitectura del procesador RISC-V o no ha sido implementada. PC = " + str(int(self.programCounter - 4)))
 
-        elif (111 != self.ir[0] and 4 != len(self.ir)) or (111 == self.ir[0] and 3 != len(self.ir)):
+        elif (4 != len(self.ir)):
             exito = False
             print("Cantidad incorrecta de parámetros para la instrucción " + str(self.ir[0]) + ": " + self.instructionSet[self.ir[0]] + ". PC = " + str(self.programCounter))
 
@@ -136,16 +136,14 @@ class Nucleo(threading.Thread):
     # Función que ejecuta la operación beq, la cual hace un branch modificando el pc con el tercer
     # parámetro, sumando este parametro * 4 y sumandolo al pc, en caso de que los primeros dos parámetros sean iguales
     def beq(self, x1, x2, etiq):
-        if x1 == x2:
+        if self.registros[x1] == self.registros[x2]:
             self.programCounter += etiq*4
 
     # Función que ejecuta la operación bne, la cual hace un branch modificando el pc con el tercer parámetro,
     # sumando este parametro * 4 y sumandolo al pc, en caso de que los primeros dos parámetros NO sean iguales
     def bne(self, x1, x2, etiq):
-        if x1 != x2 and etiq >= 0:
+        if self.registros[x1] != self.registros[x2]:
             self.programCounter += etiq*4
-        else:
-            exito = False
 
     # Función que ejecuta la operación jal, la cual hace un jump, guardando el pc actual en un registro
     # especificado por el primer parámetro y modificandolo luego con el inmediato en el tercer parámetro
