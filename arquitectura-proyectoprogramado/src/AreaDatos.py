@@ -9,7 +9,7 @@ class AreaDatos:
     #Se recibe el dato nuevo a guardar y la posición donde se desea guardar en el arreglo de datos
     def guardarDato(self, dato, posicion):
         #La posicion se divide entre 4 debido a que el arreglo comienza en 0 lógicamente
-        self.datos[int(posicion/4)] = dato
+        self.datos[posicion] = dato
 
     #Función para leer un dato del arreglo de datos
     #Se rebibe la posición donde esta guardado el dato que se desea leer en el arreglo de datos

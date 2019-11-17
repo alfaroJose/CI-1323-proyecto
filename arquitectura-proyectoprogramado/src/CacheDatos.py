@@ -72,7 +72,9 @@ class CacheDatos:
             if numBloque == self.cacheHermana.datos[indexCache]:
                 self.cacheHermana.datos[indexCache][2] = 'I'
 
+            #print(dirFisica, end='\n')
             self.memoriaPrincipal.guardarDato(dato, dirFisica)
+            #self.memoriaPrincipal.imprimirAreaDatos()
             self.cacheHermana.liberarCache()
             self.memoriaPrincipal.liberarBusDatos()
             self.liberarCache()

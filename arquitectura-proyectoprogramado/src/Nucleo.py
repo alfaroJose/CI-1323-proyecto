@@ -31,6 +31,7 @@ class Nucleo(threading.Thread):
             self.programCounter = self.hililloActual.getDireccion()
             while True == resultadoEI:
                 self.ir = self.cache.getInstruccion(self.programCounter)
+                #print(self.ir, '\n')
                 # El program counter debe ser incrementado inmediatamente después de leer la instrucción
                 self.programCounter += 4
                 resultadoEI = self.ejecutarInstruccion()
@@ -115,6 +116,8 @@ class Nucleo(threading.Thread):
 
     # Funcion que ejecuta la instrucción sw
     def sw(self, rf1, rf2, desplazamiento):
+        #print(str(int(desplazamiento + rf1)), "::", rf2, end='\n')
+        #print(desplazamiento, '\n')
         self.cache.setDato(int(desplazamiento + rf1), rf2, True)
 
     # Función que ejecuta la operación add, la cual suma el contenido de x2 con x3 y lo almacena en x1

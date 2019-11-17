@@ -19,7 +19,8 @@ class TCB:
         hilillo = None
         self.candadoTCB.acquire()
         for h in self.tcb:
-            if h.getEstado() == 0:
+            if h.getEstado() == -1:
+                h.setEstado(nucleo)
                 h.setNucleo(nucleo)
                 hilillo = h
                 break

@@ -14,10 +14,11 @@ class MemoriaPrincipal:
     #Método para guardar un dato en memoria principal
     #Se recibe el dato nuevo a guardar y la posición donde se desea guardar en memoria
     def guardarDato(self, dato, posicion):
-        if posicion >= 0 and posicion <= 380:
+        if posicion >= 0 and posicion <= 95:
+            #print(dato, "::", posicion * 4, end='\n')
             self.areaDatos.guardarDato(dato, posicion)
         else:
-            print("La posicion: " + str(posicion) + " es invalida para guardar en el area de datos")
+            print("sw: la dirección de memoria: " + str(int(posicion * 4)) + " es inválida")
 
     #Función para leer un dato de memoria
     #Se rebibe la posición donde esta guardado el dato que se desea leer en memoria

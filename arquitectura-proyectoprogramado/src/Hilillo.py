@@ -3,7 +3,7 @@ class Hilillo:
 
     def __init__(self, identificador):
         self.identificador = identificador
-        self.estado = 0
+        self.estado = -1
         self.nucleo = None;
         self.direccion = -1
         self.reloj = 0 # Almacena el número de ciclo en el que el hilillo terminó
