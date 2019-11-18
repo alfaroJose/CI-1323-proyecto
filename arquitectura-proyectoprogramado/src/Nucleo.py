@@ -48,6 +48,7 @@ class Nucleo(threading.Thread):
         #self.barrera = threading.Barrier(1)
         self.nucleoHermano.barrera._parties = 1
         self.barrera._parties = 1
+        #print(self.cache.imprimirCacheDatos(), end='\n')
         #while self.barrera.n_waiting:
          #   self.barrera.wait()
        # while self.nucleoHermano.ocupado:
