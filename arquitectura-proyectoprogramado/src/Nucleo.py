@@ -135,7 +135,7 @@ class Nucleo(threading.Thread):
 
     # Funcion que ejecuta la instrucción sw
     def sw(self, rf1, rf2, desplazamiento):
-        self.cache.setDato(int(desplazamiento + rf1), rf2)
+        self.cache.setDato(int(desplazamiento + rf1), self.registros[rf2])
 
     # Función que ejecuta la operación add, la cual suma el contenido de x2 con x3 y lo almacena en x1
     def add(self, rd, rf1, rf2):
