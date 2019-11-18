@@ -2,7 +2,6 @@ from threading import Barrier
 from threading import Barrier
 from threading import RLock
 from Nucleo import Nucleo
-from Cache import Cache
 
 #Clase para representar al procesador RISC-V
 class Procesador:
@@ -14,11 +13,12 @@ class Procesador:
         self.memoriaPrincipal = memoriaPrincipal
         self.tcb = tcb
         self.nucleo0 = Nucleo(0, self.memoriaPrincipal, tcb, self.barrera)
+        # Esto fue nuestra solución para resolver los conflictos con la caché del otro nucleo, pasando su caché como parametro
         self.nucleo1 = Nucleo(1, self.memoriaPrincipal, tcb, self.barrera, self.nucleo0.cache)
         self.nucleo0.cache.setCacheHermana(self.nucleo1.cache)
         self.nucleo0.set_nucleo_hermano(self.nucleo1)
         self.nucleo1.set_nucleo_hermano(self.nucleo0)
-        self.cache = self.iniciar()
+        self.iniciar()
 
     def iniciar(self):
         self.nucleo0.start()

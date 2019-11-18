@@ -19,6 +19,8 @@ class Nucleo(threading.Thread):
         self.registros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.instructionSet = {5: "lw", 19: "addi", 37: "sw", 56: "div", 71: "add", 72: "mul", 83: "sub", 99: "beq", 100: "bne", 103: "jalr", 111: "jal", 999: "FIN"}
 
+    #Método que se ejecuta cuando se le da start al núcleo, espera que ambos núcleos estén listos para ejecutarse
+    #y después empieza con su ejecición
     def run(self):
         self.barrera.wait() # Uso de la barrera para hacer que la ejecución de los núcleos inicie "al mismo tiempo"
         self.hililloActual = self.tcb.pedirHilillo(self.nucleo)
@@ -28,38 +30,22 @@ class Nucleo(threading.Thread):
     def iniciar(self):
         while self.hililloActual:
             resultadoEI = True  # resultado del llamado a ejecutarInstruccion()
-            self.reiniciarRegistros()
-            self.programCounter = self.hililloActual.getDireccion()
+            self.reiniciarRegistros() # Pone los registros en 0
+            self.programCounter = self.hililloActual.getDireccion() #Obtiene el PC según el hilillo a ejecutar
             while True == resultadoEI:
-                self.ir = self.cache.getInstruccion(self.programCounter)
+                self.ir = self.cache.getInstruccion(self.programCounter) #Obtiene una instrucción según el PC
                 self.cache.liberar_bus_instrucciones()
-                #print(self.ir, '\n')
                 # El program counter debe y es incrementado inmediatamente después de leer la instrucción
                 self.programCounter += 4
-                #print(self.registros, end="\n")
                 resultadoEI = self.ejecutarInstruccion()
             self.hililloActual.setEstado(self.ir)
             self.hililloActual.setReloj(self.reloj)
             self.tcb.modificarRegistrosHilillo(self.hililloActual.getIdentificador(), self.registros)
-            #print(self.registros, end="Nucleo " + str(self.nucleo) + "\n\n")
             self.hililloActual = self.tcb.pedirHilillo(self.nucleo)
-        #print("fin", '\n')
-        #self.nucleoHermano.barrera = threading.Barrier(1)
-        #self.barrera = threading.Barrier(1)
         self.nucleoHermano.barrera._parties = 1
         self.barrera._parties = 1
-        #print(self.cache.imprimirCacheDatos(), end='\n')
-        #while self.barrera.n_waiting:
-         #   self.barrera.wait()
-       # while self.nucleoHermano.ocupado:
-            #print("el otro núcleo está ocupado: ", self.nucleoHermano.ocupado, end='\n')
-            #self.nucleoHermano.candadoEstado.release()
-            #self.barrera.wait()
-        #print(self.barrera.n_waiting, end='\n')
-        #if self.barrera.n_waiting:
-         #   self.barrera.wait()
-       # print("fin", '\n')
 
+    #Indica cuál es el núcleo que se corre en paralelo
     def set_nucleo_hermano(self, nucleoHermano):
         self.nucleoHermano = nucleoHermano
 
@@ -191,7 +177,3 @@ class Nucleo(threading.Thread):
     def getProgramCounter(self):
         return self.programCounter
 
-    def imprimirCaches(self):
-        print("Núcleo: " + str(self.nucleo))
-        print("Caché de datos: ")
-        self.cache.imprimirCacheDatos()

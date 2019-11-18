@@ -1,6 +1,5 @@
 from threading import RLock
 
-
 # Clase que representa una cache de datos de un núcleo
 class CacheDatos:
 
@@ -22,7 +21,7 @@ class CacheDatos:
                 print(self.datos[i][j], end=' ')
             print()
 
-    # Método que se encarga de la coherencia de caché de datos a la hora de obtener un de esta
+    # Método que obtiene un dato para la caché de datos de memoria principal, se encarga de la coherencia de caché y bloqueos necesarios
     def getDato(self, dirLogica, nucleo_padre, bloquearEjecucion=False):
         dirFisica = int(dirLogica / 4)
         numBloque = int(dirFisica / 4)
@@ -33,32 +32,29 @@ class CacheDatos:
         dato = None
 
         while dato is None:
-            if not self.bloquearCache(True):
+            if not self.bloquearCache(True): #Intenta bloquear propia caché
                 nucleo_padre.barrera.wait()
                 nucleo_padre.reloj += 1
                 continue
             bloqueCache = self.datos[indexCache]
             bloque = bloqueCache[0]
             if numBloque != bloqueCache[1] or 'C' != bloqueCache[2]:
-                if not self.memoriaPrincipal.bloquearBusDatos():
+                if not self.memoriaPrincipal.bloquearBusDatos(): #Intenta bloquear bus de datos
                     self.liberarCache()
                     nucleo_padre.barrera.wait()
                     nucleo_padre.reloj += 1
                     continue
                 bloque = self.memoriaPrincipal.leerBloqueDatos(dirFisica)
-                #self.memoriaPrincipal.liberarBusDatos()
                 self.datos[indexCache][0] = bloque
                 self.datos[indexCache][1] = numBloque
                 self.datos[indexCache][2] = 'C'
-                for ciclo in range(20):
+                for ciclo in range(20): #Espera para actualizar el reloj correspondientemente
                     nucleo_padre.barrera.wait()
                     nucleo_padre.reloj += 1
-                #self.liberarCache()
             dato = bloque[int(dirFisica - (numBloque * 4))]
-            #self.liberarCache()
         return dato
 
-    # aquí hay que implementar el bloqueo del bus y cachés
+    # Método que guarda un dato en memoria de la caché de datos se encarga de la coherencia de caché y bloqueos necesarios
     def setDato(self, dirLogica, dato, nucleo_padre, bloquearEjecucion=False):
         numBloque = int(dirLogica / 4 / 4)
         indexCache = int(numBloque % 4)
@@ -66,23 +62,23 @@ class CacheDatos:
         datoGuardado = False
 
         while not datoGuardado:
-            if not self.bloquearCache(False):
+            if not self.bloquearCache(False): #Intenta bloquear propia caché
                 nucleo_padre.barrera.wait()
                 nucleo_padre.reloj += 1
                 continue
-            if not self.memoriaPrincipal.bloquearBusDatos():
+            if not self.memoriaPrincipal.bloquearBusDatos(): #Intenta bloquear bus de datos
                 self.liberarCache()
                 nucleo_padre.barrera.wait()
                 nucleo_padre.reloj += 1
                 continue
-            if not self.cacheHermana.bloquearCache():
+            if not self.cacheHermana.bloquearCache(): #Intenta bloquear caché del otro núcleo
                 self.memoriaPrincipal.liberarBusDatos()
                 self.liberarCache()
                 nucleo_padre.barrera.wait()
                 nucleo_padre.reloj += 1
                 continue
             bloqueCache = self.datos[indexCache]
-
+            #Coherencia de las cachés
             if numBloque == bloqueCache[1] and 'C' == bloqueCache[2]:
                 self.datos[indexCache][0][int(dirFisica - int(numBloque * 4))] = dato
             if numBloque == self.cacheHermana.datos[indexCache]:
@@ -90,9 +86,8 @@ class CacheDatos:
                 nucleo_padre.barrera.wait()
                 nucleo_padre.reloj += 1
             self.cacheHermana.liberarCache()
-            # print(dirFisica, end='\n')
             self.memoriaPrincipal.guardarDato(dato, dirFisica)
-            for ciclo in range(5):
+            for ciclo in range(5):#Ciclo para simular espera en coclos de reloj
                 nucleo_padre.barrera.wait()
                 nucleo_padre.reloj += 1
             self.memoriaPrincipal.liberarBusDatos()
@@ -111,7 +106,6 @@ class CacheDatos:
         liberada = True
         try:
             self.candadoCache.release()
-            # self.busDatos.release()
         except:
             liberada = False
         return liberada

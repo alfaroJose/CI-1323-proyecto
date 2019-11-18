@@ -6,8 +6,8 @@ class Cache:
 
     def __init__(self, nucleo, memoriaPrincipal, cacheHermana):
         self.nucleoPadre = nucleo
-        self.cacheHermana = cacheHermana
-        if(self.cacheHermana):
+        self.cacheHermana = cacheHermana #Caché del otro núcleo
+        if self.cacheHermana:
             self.cacheDatos = CacheDatos(memoriaPrincipal, self.cacheHermana.cacheDatos)
         else:
             self.cacheDatos = CacheDatos(memoriaPrincipal)
@@ -19,6 +19,7 @@ class Cache:
     def imprimirCacheInstrucciones(self):
         self.cacheInstrucciones.imprimir()
 
+    #Solución implementada para la coherencia de las cachés de ambos núcleos
     def setCacheHermana(self, cachehermana):
         self.cacheHermana = cachehermana
         self.cacheDatos.cacheHermana = self.cacheHermana.cacheDatos
@@ -26,6 +27,7 @@ class Cache:
     def getInstruccion(self, programCounter):
         return self.cacheInstrucciones.getInstruccion(programCounter, self.nucleoPadre)
 
+    #Método que libera el bus de instrucciones
     def liberar_bus_instrucciones(self):
         self.cacheInstrucciones.liberar_bus_instrucciones(self.nucleoPadre)
 
@@ -35,13 +37,16 @@ class Cache:
     def setDato(self, dirLogica, dato, bloquearEjecucion = False):
         return self.cacheDatos.setDato(dirLogica, dato, self.nucleoPadre, bloquearEjecucion)
 
+    #Método que libera el bus de datos
     def liberar_bus_datos(self):
         if self.cacheDatos.memoriaPrincipal.liberarBusDatos():
             self.nucleoPadre.barrera.wait()
             self.nucleoPadre.reloj += 1
 
+    #Método que coloca el candado en la caché de datos
     def bloquearCacheDatos(self, bloquearEjecucion = False):
         return self.cacheDatos.bloquearCache(bloquearEjecucion)
 
+    #Método que libera el candado de la caché de datos
     def liberarCacheDatos(self):
         return self.cacheDatos.liberarCache()

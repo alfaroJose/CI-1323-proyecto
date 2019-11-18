@@ -73,7 +73,6 @@ class MemoriaPrincipal:
         liberado = True
         try:
             self.busDatos.release()
-            #self.busDatos.release()
         except:
             liberado = False
         return liberado
@@ -83,7 +82,6 @@ class MemoriaPrincipal:
         liberado = True
         try:
             self.busInstrucciones.release()
-            #self.busInstrucciones.release()
         except:
             liberado = False
         return liberado
