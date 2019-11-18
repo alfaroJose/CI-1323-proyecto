@@ -8,6 +8,7 @@ class Nucleo(threading.Thread):
         threading.Thread.__init__(self)
         self.nucleo = nucleo
         self.name = nucleo
+        self.nucleoHermano = None
         self.reloj = 0
         self.ir = [] #Instruction register
         self.cache = Cache(self, memoriaPrincipal, cacheHermana)
@@ -19,7 +20,7 @@ class Nucleo(threading.Thread):
         self.instructionSet = {5: "lw", 19: "addi", 37: "sw", 56: "div", 71: "add", 72: "mul", 83: "sub", 99: "beq", 100: "bne", 103: "jalr", 111: "jal", 999: "FIN"}
 
     def run(self):
-        self.barrera.wait() #Barrera para hacer que la ejecución de los núcleos inicie "al mismo tiempo"
+        self.barrera.wait() # Uso de la barrera para hacer que la ejecución de los núcleos inicie "al mismo tiempo"
         self.hililloActual = self.tcb.pedirHilillo(self.nucleo)
         self.iniciar()
 
@@ -31,6 +32,7 @@ class Nucleo(threading.Thread):
             self.programCounter = self.hililloActual.getDireccion()
             while True == resultadoEI:
                 self.ir = self.cache.getInstruccion(self.programCounter)
+                self.cache.liberar_bus_instrucciones()
                 #print(self.ir, '\n')
                 # El program counter debe y es incrementado inmediatamente después de leer la instrucción
                 self.programCounter += 4
@@ -41,6 +43,24 @@ class Nucleo(threading.Thread):
             self.tcb.modificarRegistrosHilillo(self.hililloActual.getIdentificador(), self.registros)
             #print(self.registros, end="Nucleo " + str(self.nucleo) + "\n\n")
             self.hililloActual = self.tcb.pedirHilillo(self.nucleo)
+        #print("fin", '\n')
+        #self.nucleoHermano.barrera = threading.Barrier(1)
+        #self.barrera = threading.Barrier(1)
+        self.nucleoHermano.barrera._parties = 1
+        self.barrera._parties = 1
+        #while self.barrera.n_waiting:
+         #   self.barrera.wait()
+       # while self.nucleoHermano.ocupado:
+            #print("el otro núcleo está ocupado: ", self.nucleoHermano.ocupado, end='\n')
+            #self.nucleoHermano.candadoEstado.release()
+            #self.barrera.wait()
+        #print(self.barrera.n_waiting, end='\n')
+        #if self.barrera.n_waiting:
+         #   self.barrera.wait()
+       # print("fin", '\n')
+
+    def set_nucleo_hermano(self, nucleoHermano):
+        self.nucleoHermano = nucleoHermano
 
     def reiniciarRegistros(self):
         self.registros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -109,7 +129,10 @@ class Nucleo(threading.Thread):
 
     #Funcion que ejecuta la instrucción lw
     def lw(self, rd, rf1, desplazamiento):
-        self.registros[rd] = self.cache.getDato(int(desplazamiento + rf1), True)
+        self.registros[rd] = self.cache.getDato(int(desplazamiento + rf1))
+        #print("aqui", end='\n')
+        self.cache.liberar_bus_datos()
+        self.cache.liberarCacheDatos()
 
     # Función que ejecuta la operación addi, la cual suma el contenido de x2 con un inmediato y lo almacena en x1
     def addi(self, rd, rf, inmediato):
@@ -117,9 +140,7 @@ class Nucleo(threading.Thread):
 
     # Funcion que ejecuta la instrucción sw
     def sw(self, rf1, rf2, desplazamiento):
-        #print(str(int(desplazamiento + rf1)), "::", rf2, end='\n')
-        #print(desplazamiento, '\n')
-        self.cache.setDato(int(desplazamiento + rf1), rf2, True)
+        self.cache.setDato(int(desplazamiento + rf1), rf2)
 
     # Función que ejecuta la operación add, la cual suma el contenido de x2 con x3 y lo almacena en x1
     def add(self, rd, rf1, rf2):

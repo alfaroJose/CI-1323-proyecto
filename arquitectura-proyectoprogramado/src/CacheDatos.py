@@ -23,7 +23,7 @@ class CacheDatos:
             print()
 
     # aquí hay que implementar el bloqueo del bus y cachés
-    def getDato(self, dirLogica, bloquearEjecucion=False):
+    def getDato(self, dirLogica, nucleo_padre, bloquearEjecucion=False):
         dirFisica = int(dirLogica / 4)
         numBloque = int(dirFisica / 4)
         indexCache = int(numBloque % 4)
@@ -33,41 +33,53 @@ class CacheDatos:
         dato = None
 
         while dato is None:
-            self.bloquearCache(bloquearEjecucion)
+            if not self.bloquearCache(True):
+                nucleo_padre.barrera.wait()
+                nucleo_padre.reloj += 1
+                continue
             bloqueCache = self.datos[indexCache]
             bloque = bloqueCache[0]
             if numBloque != bloqueCache[1] or 'C' != bloqueCache[2]:
                 if not self.memoriaPrincipal.bloquearBusDatos():
                     self.liberarCache()
+                    nucleo_padre.barrera.wait()
+                    nucleo_padre.reloj += 1
                     continue
-                # if not self.cacheHermana.bloquearCache():
-                #     self.memoriaPrincipal.liberarBusDatos()
-                #     self.liberarCache()
-                #     continue
                 bloque = self.memoriaPrincipal.leerBloqueDatos(dirFisica)
-                self.memoriaPrincipal.liberarBusDatos()
+                #self.memoriaPrincipal.liberarBusDatos()
                 self.datos[indexCache][0] = bloque
                 self.datos[indexCache][1] = numBloque
                 self.datos[indexCache][2] = 'C'
+                for ciclo in range(20):
+                    nucleo_padre.barrera.wait()
+                    nucleo_padre.reloj += 1
+                #self.liberarCache()
             dato = bloque[int(dirFisica - (numBloque * 4))]
-            self.liberarCache()
+            #self.liberarCache()
         return dato
 
     # aquí hay que implementar el bloqueo del bus y cachés
-    def setDato(self, dirLogica, dato, bloquearEjecucion=False):
+    def setDato(self, dirLogica, dato, nucleo_padre, bloquearEjecucion=False):
         numBloque = int(dirLogica / 4 / 4)
         indexCache = int(numBloque % 4)
         dirFisica = int(dirLogica / 4)
         datoGuardado = False
 
         while not datoGuardado:
-            self.bloquearCache(bloquearEjecucion)
+            if not self.bloquearCache(False):
+                nucleo_padre.barrera.wait()
+                nucleo_padre.reloj += 1
+                continue
             if not self.memoriaPrincipal.bloquearBusDatos():
                 self.liberarCache()
+                nucleo_padre.barrera.wait()
+                nucleo_padre.reloj += 1
                 continue
             if not self.cacheHermana.bloquearCache():
                 self.memoriaPrincipal.liberarBusDatos()
                 self.liberarCache()
+                nucleo_padre.barrera.wait()
+                nucleo_padre.reloj += 1
                 continue
             bloqueCache = self.datos[indexCache]
 
@@ -75,13 +87,18 @@ class CacheDatos:
                 self.datos[indexCache][0][int(dirFisica - int(numBloque * 4))] = dato
             if numBloque == self.cacheHermana.datos[indexCache]:
                 self.cacheHermana.datos[indexCache][2] = 'I'
-
+                nucleo_padre.barrera.wait()
+                nucleo_padre.reloj += 1
+            self.cacheHermana.liberarCache()
             # print(dirFisica, end='\n')
             self.memoriaPrincipal.guardarDato(dato, dirFisica)
-            # self.memoriaPrincipal.imprimirAreaDatos()
-            self.cacheHermana.liberarCache()
+            for ciclo in range(5):
+                nucleo_padre.barrera.wait()
+                nucleo_padre.reloj += 1
             self.memoriaPrincipal.liberarBusDatos()
             self.liberarCache()
+            nucleo_padre.barrera.wait()
+            nucleo_padre.reloj += 1
             datoGuardado = True
         return True
 

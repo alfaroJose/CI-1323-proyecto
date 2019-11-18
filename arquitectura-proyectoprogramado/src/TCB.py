@@ -20,7 +20,7 @@ class TCB:
         self.candadoTCB.acquire()
         for h in self.tcb:
             if h.getEstado() == -1:
-                h.setEstado(nucleo)
+                h.setEstado(nucleo) # Para evitar que el hilillo sea tomado por el otro núcleo
                 h.setNucleo(nucleo)
                 hilillo = h
                 break

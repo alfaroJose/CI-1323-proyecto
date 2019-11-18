@@ -66,7 +66,7 @@ class MemoriaPrincipal:
 
     # Método que le permite a las cachés bloquear el bus de instrucciones
     def bloquearBusInstrucciones(self):
-            return self.busInstrucciones.acquire()  # Con False, el método no bloquea la ejecución, esto para evitar Deadlocks
+            return self.busInstrucciones.acquire(False)  # Con False, el método no bloquea la ejecución, esto para evitar Deadlocks
 
     #Método que le permite a las cachés liberar el bus de datos
     def liberarBusDatos(self):

@@ -18,16 +18,25 @@ class CacheInstrucciones:
                 print(self.instrucciones[i][j], end=' ')
             print()
 
-    def getInstruccion(self, programCounter):
+    def getInstruccion(self, programCounter, nucleoPadre):
         numBloque = int(programCounter / 4 / 4)
         indexCache = int(numBloque % 4)
         bloqueCache = self.instrucciones[indexCache]
         bloque = bloqueCache[0]
-        if(numBloque != bloqueCache[1]):
-            self.memoriaPrincipal.bloquearBusInstrucciones()
+        if numBloque != bloqueCache[1]:
+            while not self.memoriaPrincipal.bloquearBusInstrucciones():
+                nucleoPadre.barrera.wait()
+                nucleoPadre.reloj += 1
             bloque = self.memoriaPrincipal.leerBloqueInstrucciones(programCounter)
-            self.memoriaPrincipal.liberarBusInstrucciones()
+            for ciclo in range(10):
+                nucleoPadre.barrera.wait()
+                nucleoPadre.reloj += 1
             self.instrucciones[indexCache][0] = bloque
             self.instrucciones[indexCache][1] = numBloque
         instruccion = bloque[int((programCounter - (numBloque * 4 * 4)) / 4)]
         return instruccion
+
+    def liberar_bus_instrucciones(self, nucleo_padre):
+        if self.memoriaPrincipal.liberarBusInstrucciones():
+            nucleo_padre.barrera.wait()
+            nucleo_padre.reloj += 1

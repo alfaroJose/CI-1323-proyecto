@@ -24,13 +24,21 @@ class Cache:
         self.cacheDatos.cacheHermana = self.cacheHermana.cacheDatos
 
     def getInstruccion(self, programCounter):
-        return self.cacheInstrucciones.getInstruccion(programCounter)
+        return self.cacheInstrucciones.getInstruccion(programCounter, self.nucleoPadre)
 
-    def getDato(self, dirLogica, bloquearEjecucion = False):
-        return self.cacheDatos.getDato(dirLogica, bloquearEjecucion)
+    def liberar_bus_instrucciones(self):
+        self.cacheInstrucciones.liberar_bus_instrucciones(self.nucleoPadre)
+
+    def getDato(self, dirLogica):
+        return self.cacheDatos.getDato(dirLogica, self.nucleoPadre, True)
 
     def setDato(self, dirLogica, dato, bloquearEjecucion = False):
-        return self.cacheDatos.setDato(dirLogica, dato, bloquearEjecucion)
+        return self.cacheDatos.setDato(dirLogica, dato, self.nucleoPadre, bloquearEjecucion)
+
+    def liberar_bus_datos(self):
+        if self.cacheDatos.memoriaPrincipal.liberarBusDatos():
+            self.nucleoPadre.barrera.wait()
+            self.nucleoPadre.reloj += 1
 
     def bloquearCacheDatos(self, bloquearEjecucion = False):
         return self.cacheDatos.bloquearCache(bloquearEjecucion)
