@@ -68,11 +68,6 @@ class Nucleo(threading.Thread):
     #Metodo que analiza una instrucción, la identifica y ejecuta su función correspondiente
     def ejecutarInstruccion(self):
         exito = True
-        # try:
-        #     if not self.instructionSet[self.ir[0]]:
-        #         print(".")
-        # except:
-        #     print(self.ir, end="Nucleo:"+ str(self.nucleo) + "\n")
         if not self.instructionSet[self.ir[0]]:
             exito = False
             print("La instrucción: " + str(self.ir[0]) + " no corresponde a la arquitectura del procesador RISC-V o no ha sido implementada. PC = " + str(int(self.programCounter - 4)))
@@ -194,3 +189,8 @@ class Nucleo(threading.Thread):
 
     def getProgramCounter(self):
         return self.programCounter
+
+    def imprimirCaches(self):
+        print("Núcleo: " + str(self.nucleo))
+        print("Caché de datos: ")
+        self.cache.imprimirCacheDatos()

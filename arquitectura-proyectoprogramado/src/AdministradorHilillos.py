@@ -48,77 +48,9 @@ def cargarHilillos(hilillos, memoriaPrincipal, tcb):
 memoriaPrincipal = MemoriaPrincipal()
 tcb = TCB()
 cargarHilillos(leerHilillos(), memoriaPrincipal, tcb)
-#tcb.imprimir()
-#memoriaPrincipal.imprimirAreaInstrucciones()
-#memoriaPrincipal.imprimirAreaDatos()
 procesador = Procesador(memoriaPrincipal, tcb)
+print("Área de datos:")
+memoriaPrincipal.imprimirAreaDatos()
 print("Información del TCB:")
 tcb.imprimir()
-print("Área de datos:")
-#tcb.imprimir()
-memoriaPrincipal.imprimirAreaDatos()
-#memoriaPrincipal.imprimirAreaInstrucciones()
 
-
-
-# tcb.imprimir()
-# tcb.pedirHilillo(200)
-# tcb.pedirHilillo(300)
-# tcb.pedirHilillo(400)
-# tcb.pedirHilillo(500)
-# tcb.imprimir()
-
-#nucleo = Nucleo(memoriaPrincipal)
-#nucleo.iniciar()
-#print(nucleo.getRegistros(), end="<<<<<<<<<<<<<<<<<<<<<<<-----------")
-#nucleo.ejecutarInstruccion()
-#nucleo.ejecutarInstruccion()
-#nucleo.ejecutarInstruccion()
-#nucleo.ejecutarInstruccion()
-#tcb.modificarRegistrosHilillo("0",nucleo.getRegistros())
-#tcb.imprimir()
-
-# if memoriaPrincipal.bloquearBusDatos():
-#     print("Bus de datos bloqueado")
-# else:
-#     print("No fue posible bloquear el bus de datos");
-#
-# if memoriaPrincipal.liberarBusDatos():
-#     print("Bus de datos liberado")
-# else:
-#     print("No fue posible liberar el bus de datos");
-
-# if memoriaPrincipal.bloquearBusInstrucciones():
-#     print("Bus de instrucciones bloqueado")
-# else:
-#     print("No fue posible bloquear el bus de instrucciones");
-#
-# if memoriaPrincipal.liberarBusInstrucciones():
-#     print("Bus de instrucciones liberado")
-# else:
-#     print("No fue posible liberar el bus de instrucciones");
-
-
-# memoriaPrincipal.guardarDato(380, 380)
-#print(memoriaPrincipal.leerDato(380))
-#memoriaPrincipal.guardarInstrucciones("999 999 999 999", 388)
-#memoriaPrincipal.guardarDato(80,384)
-#memoriaPrincipal.imprimirMemoria()
-#print(memoriaPrincipal.leerInstrucciones(384))
-#memoriaPrincipal.imprimirAreaDatos()
-#memoriaPrincipal.imprimirAreaInstrucciones()
-#memoriaPrincipal.imprimirMemoria()
-
-#tcb = TCB()
-#tcb.agregarHilillo("0")
-#tcb.imprimir()
-
-#cache = Cache(memoriaPrincipal)
-#cache.imprimirCacheDatos()
-#cache.imprimirCacheInstrucciones()
-#cache.getDato(132);
-#cache.imprimirCacheDatos()
-#print(cache.getInstruccion(404))
-#cache.imprimirCacheInstrucciones()
-#print(memoriaPrincipal.leerBloqueDatos(380))
-#print(memoriaPrincipal.leerBloqueInstrucciones(1004))

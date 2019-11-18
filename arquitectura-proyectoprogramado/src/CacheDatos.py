@@ -22,7 +22,7 @@ class CacheDatos:
                 print(self.datos[i][j], end=' ')
             print()
 
-    # aquí hay que implementar el bloqueo del bus y cachés
+    # Método que se encarga de la coherencia de caché de datos a la hora de obtener un de esta
     def getDato(self, dirLogica, nucleo_padre, bloquearEjecucion=False):
         dirFisica = int(dirLogica / 4)
         numBloque = int(dirFisica / 4)

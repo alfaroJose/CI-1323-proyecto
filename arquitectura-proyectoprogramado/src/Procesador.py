@@ -1,5 +1,6 @@
 from threading import Barrier
 from Nucleo import Nucleo
+from Cache import Cache
 
 #Clase para representar al procesador RISC-V
 class Procesador:
@@ -14,7 +15,7 @@ class Procesador:
         self.nucleo0.cache.setCacheHermana(self.nucleo1.cache)
         self.nucleo0.set_nucleo_hermano(self.nucleo1)
         self.nucleo1.set_nucleo_hermano(self.nucleo0)
-        self.iniciar()
+        self.cache = self.iniciar()
 
     def iniciar(self):
         self.nucleo0.start()

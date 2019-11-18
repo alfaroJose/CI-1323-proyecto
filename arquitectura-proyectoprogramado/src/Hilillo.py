@@ -60,7 +60,7 @@ class Hilillo:
             if i == 31:
                 print(self.registros[i])
             else:
-                print(self.registros[i], end= ',')
+                print(self.registros[i], end=',')
 
     def sizeID(self):
         return len(self.identificador)

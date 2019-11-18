@@ -84,15 +84,11 @@ class TCB:
         relleno = 0
         print("Id", end= self.calcularRellenoID(self.maxID()))
         print("Núcleo", end=self.calcularRellenoNucleo(self.maxNucleo()))
-        print("Estado", end=self.calcularRellenoEstado(self.maxEstado()))
-        print("Dirección", end=self.calcularRellenoDireccion(self.maxDireccion()))
         print("Reloj", end=self.calcularRellenoReloj(self.maxReloj()))
         print("Registros")
         for hilillo in self.tcb:
             print(hilillo.getIdentificador(), end=self.calcularRellenoIDDato(self.maxID()))
             print(hilillo.getNucleo(), end=self.calcularRellenoNucleoDato(self.maxNucleo()))
-            print(hilillo.getEstado(), end=self.calcularRellenoEstadoDato(self.maxEstado()))
-            print(hilillo.getDireccion(), end=self.calcularRellenoDireccionDato(self.maxDireccion()))
             print(hilillo.getReloj(), end=self.calcularRellenoRelojDato(self.maxReloj()))
             r = hilillo.getRegistros()
             for i in range(32):
@@ -134,41 +130,6 @@ class TCB:
 
     def calcularRellenoNucleoDato(self, max):
         relleno = "      "
-        return relleno
-
-    def maxEstado(self):
-        max = 0
-        for hilillo in self.tcb:
-            if hilillo.sizeID() > max:
-                max = hilillo.sizeEstado()
-        return max
-
-    def calcularRellenoEstado(self, max):
-        relleno = "         "
-        if max < 2:
-            relleno = " "
-        return relleno
-
-    def calcularRellenoEstadoDato(self, max):
-        relleno = " "
-
-        return relleno
-
-    def maxDireccion(self):
-        max = 0
-        for hilillo in self.tcb:
-            if hilillo.sizeID() > max:
-                max = hilillo.sizeDireccion()
-        return max
-
-    def calcularRellenoDireccion(self, max):
-        relleno = " "
-
-        return relleno
-
-    def calcularRellenoDireccionDato(self, max):
-        relleno = "       "
-
         return relleno
 
     def maxReloj(self):
