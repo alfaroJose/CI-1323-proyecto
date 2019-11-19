@@ -15,10 +15,26 @@ class CacheDatos:
         self.candadoCache = RLock()
         self.memoriaPrincipal = memoriaPrincipal
 
-    def imprimir(self):
+    def maxLen(self):
+        max = 0
         for i in range(len(self.datos)):
             for j in range(len(self.datos[i])):
-                print(self.datos[i][j], end=' ')
+                if len(str(self.datos[i][j])) > max:
+                    max = len(str(self.datos[i][j]))
+        return max
+
+    def calcularRelleno(self, numero, tamanoMaximo):
+        relleno = " "
+        for x in range(len(str(numero)), tamanoMaximo):
+            relleno += " "
+        return relleno
+
+    def imprimir(self):
+        print("Bloque", end=self.calcularRelleno("Bloque", self.maxLen()))
+        print("# de bloque  Estado")
+        for i in range(len(self.datos)):
+            for j in range(len(self.datos[i])):
+                print(self.datos[i][j], end=self.calcularRelleno(self.datos[i][j], self.maxLen()))
             print()
 
     # Método que obtiene un dato para la caché de datos de memoria principal, se encarga de la coherencia de caché y bloqueos necesarios

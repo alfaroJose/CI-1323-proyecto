@@ -81,7 +81,6 @@ class TCB:
 
     #Imprime los datos de cada hilillo en el TCB
     def imprimir(self):
-        relleno = 0
         print("Id", end= self.calcularRellenoID(self.maxID()))
         print("Núcleo", end=self.calcularRellenoNucleo(self.maxNucleo()))
         print("Estado", end=self.calcularRellenoEstado(self.maxEstado()))
@@ -185,6 +184,6 @@ class TCB:
 
     def calcularRellenoRelojDato(self, max):
         relleno = "    "
-        if max == 2:
+        if max < 3:
             relleno = "   "
         return relleno
